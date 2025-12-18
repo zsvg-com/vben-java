@@ -1,0 +1,7 @@
+﻿    insert into sys_perm_menu (id,ornum,pid,porid,type,code,icon,path,comp,extag,catag,shtag,iftag,name,crman,avtag)
+    values ('${table.bunam}',999991,null,'sys','M','${table.bunam}','ele-Tickets','/${table.name.replace("_","/")}','/${table.name.replace("_","/")}/index',0,1,1,0,'${table.remark}清单','sa',1);
+
+#if($table.edtyp=="tab")
+    insert into sys_perm_menu (id,ornum,pid,porid,type,code,icon,path,comp,extag,catag,shtag,iftag,name,crman,avtag)
+    values ('${table.bunam}Edit',999992,null,'sys','M','${table.bunam}Edit','ele-Tickets','/${table.name.replace("_","/")}/edit','/${table.name.replace("_","/")}/edit',0,1,0,0,'${table.remark}编辑','sa',1);
+#end

@@ -1,0 +1,83 @@
+package ${packageName};
+
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import vben.common.core.domain.R;
+import vben.common.idempotent.annotation.RepeatSubmit;
+import vben.common.jdbc.dto.PageData;
+import vben.common.jdbc.sqler.Sqler;
+import vben.common.log.annotation.Log;
+import vben.common.log.enums.BusinessType;
+
+/**
+ * ${table.remark}
+ */
+@RestController
+@RequestMapping("${table.name.replace("_","/")}")
+@RequiredArgsConstructor
+public class ${table.bunam}Controller {
+
+    /**
+     * ${table.remark}分页查询
+     * @param name ${table.remark}名称
+     * @return ${table.remark}分页数据
+     */
+    @GetMapping
+    public R<PageData> get(String name) {
+        Sqler sqler = new Sqler("${table.name}");
+        sqler.addLike("t.name", name);
+        sqler.addSelect("t.notes");
+        return R.ok(service.findPageData(sqler));
+    }
+
+    /**
+     * ${table.remark}详情查询
+     * @param id ID
+     * @return ${table.remark}对象
+     */
+    @GetMapping("info/{id}")
+    public R<${table.bunam}> info(@PathVariable Long id) {
+        ${table.bunam} main = service.select(id);
+        return R.ok(main);
+    }
+
+    /**
+     * ${table.remark}新增
+     * @param main ${table.remark}对象
+     * @return ID
+     */
+    @PostMapping
+    @Log(title = "${table.remark}", businessType = BusinessType.INSERT)
+    @RepeatSubmit
+    public R<Long> post(@RequestBody ${table.bunam} main) {
+        return R.ok(null,service.insert(main));
+    }
+
+    /**
+     * ${table.remark}修改
+     * @param main ${table.remark}对象
+     * @return ID
+     */
+    @PutMapping
+    @RepeatSubmit
+    @Log(title = "${table.remark}", businessType = BusinessType.UPDATE)
+    public R<Long> put(@RequestBody ${table.bunam} main) {
+        return R.ok(null,service.update(main));
+    }
+
+    /**
+     * ${table.remark}删除
+     * @param ids ID串
+     * @return 删除的${table.remark}数量
+     */
+    @DeleteMapping("{ids}")
+    @Log(title = "${table.remark}", businessType = BusinessType.DELETE)
+    public R<Integer> delete(@PathVariable Long[] ids) {
+        return R.ok(service.delete(ids));
+    }
+
+    private final ${table.bunam}Service service;
+
+}
+

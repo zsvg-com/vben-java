@@ -1,0 +1,5 @@
+vben.common.web.config.CaptchaConfig
+vben.common.web.config.FilterConfig
+vben.common.web.config.I18nConfig
+vben.common.web.config.ResourcesConfig
+vben.common.web.config.UndertowConfig

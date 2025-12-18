@@ -1,0 +1,86 @@
+<script lang="ts" setup>
+import { Page } from '@vben/common-ui';
+import { useTabs } from '@vben/hooks';
+
+import { requestClient } from '#/api/request';
+import { tabSave } from '#/utils/page/edit';
+
+const formRef = ref();
+
+const state = reactive({
+  url: '/${table.name.replace("_","/")}',
+  show: true,
+  form: {} as any,
+});
+const rdata = reactive({} as any);
+const { form } = toRefs(state);
+const activeName = ref('tab1');
+const permTableRef = ref();
+const treeProps = reactive({
+  checkStrictly: true,
+});
+
+onMounted(async () => {
+  const id = useRoute().query?.id;
+  state.form = id ? await requestClient.get(`${state.url}/info/${id}`) : { avtag: true, type: 1 };
+  formRef?.value?.clearValidate();
+});
+
+const { closeCurrentTab } = useTabs();
+const save = async () => {
+  const back = await tabSave({
+    formRef: formRef.value,
+    state,
+  });
+  if (back) {
+    await closeCurrentTab();
+  }
+};
+</script>
+
+<template>
+    <Page auto-content-height>
+        <el-card class="box-card" style="height: 100%" body-style="height: 100%">
+            <template #header>
+                <div class="flex justify-between">
+                    <el-space>${table.remark}维护</el-space>
+                    <el-space>
+                        <el-button type="primary" @click="save">保 存</el-button>
+                        <el-button @click="closeCurrentTab()">关 闭</el-button>
+                    </el-space>
+                </div>
+            </template>
+            <div style="height: calc(100% - 50px); overflow: auto; padding-top: 5px; padding-left: 0; padding-right: 0">
+                <el-form :inline="true" ref="formRef" :model="form" label-width="140px" class="zform">
+                    <el-tabs type="card" v-model="activeName" style="width: 100%">
+                        <el-tab-pane label="基本信息" name="tab1">
+                            <el-form-item label="${table.remark}名称" prop="name" :rules="[{ required: true, message: '${table.remark}名称不能为空' }]">
+                                <el-input v-model="form.name" />
+                            </el-form-item>
+                            <el-form-item label="备注" prop="notes">
+                                <el-input v-model="form.notes" :rows="3" type="textarea" />
+                            </el-form-item>
+                            <template v-if="form.crtim">
+                                <el-form-item label="创建人" style="width: 50%">
+                                    <div>{{ form.cruna }}</div>
+                                </el-form-item>
+                                <el-form-item label="创建时间" style="width: 50%">
+                                    <div>{{ form.crtim }}</div>
+                                </el-form-item>
+                                <el-form-item label="更新人" style="width: 50%">
+                                    <div>{{ form.upuna }}</div>
+                                </el-form-item>
+                                <el-form-item label="更新时间" style="width: 50%">
+                                    <div>{{ form.uptim }}</div>
+                                </el-form-item>
+                            </template>
+                        </el-tab-pane>
+                        <el-tab-pane label="其他信息" name="tab2">
+
+                        </el-tab-pane>
+                    </el-tabs>
+                </el-form>
+            </div>
+        </el-card>
+    </Page>
+</template>

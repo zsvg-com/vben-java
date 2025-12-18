@@ -1,0 +1,97 @@
+package vben.base.sys.perm.auth;
+
+import cn.hutool.core.collection.CollUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import vben.base.sys.org.user.SysOrgUserDao;
+import vben.base.sys.perm.menu.SysPermMenu;
+import vben.base.sys.perm.menu.SysPermMenuDao;
+import vben.common.core.constant.Constants;
+import vben.common.core.constant.SystemConstants;
+import vben.common.core.utils.StrUtils;
+import vben.common.redis.utils.RedisUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+
+@Service
+@Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
+public class SysPermAuthService {
+
+    public List<RouterVo> getRouters(String userId) {
+        List<RouterVo> routerVoList = RedisUtils.getCacheObject("rlist:" + userId);
+        if(routerVoList == null) {
+            if("u1".equals(userId)) {
+                List<SysPermMenu> menuList = menuDao.findAll();
+                routerVoList = buildMenus(menuList);
+                RedisUtils.setCacheObject("rlist:" + userId, routerVoList);
+                return routerVoList;
+            }
+            String oids = RedisUtils.getCacheObject("oids:" + userId);
+            if(oids == null){
+                oids = userDao.findOrgs(userId);
+                RedisUtils.setCacheObject("oids:" + userId, oids);
+            }
+            List<SysPermMenu> menuList=menuDao.findListByOids(oids);
+            routerVoList = buildMenus(menuList);
+            RedisUtils.setCacheObject("rlist:" + userId, routerVoList);
+        }
+        return routerVoList;
+    }
+
+    private List<RouterVo> buildMenus(List<SysPermMenu> menus) {
+        List<RouterVo> routers = new LinkedList<>();
+        for (SysPermMenu menu : menus) {
+            String name = menu.getRouteName() + menu.getId();
+            RouterVo router = new RouterVo();
+            router.setHidden(!menu.getShtag());
+            router.setName(name);
+            router.setPath(menu.getPid()==0L?"/"+menu.getPath():menu.getPath());
+            router.setComponent(menu.getComp());
+            router.setQuery(menu.getParam());
+            router.setMeta(new MetaVo(menu.getName(), menu.getIcon(), !menu.getCatag(), menu.getPath()));
+            List<SysPermMenu> cMenus = menu.getChildren();
+            if (CollUtil.isNotEmpty(cMenus) && "1".equals(menu.getType())) {
+                router.setAlwaysShow(true);
+                router.setRedirect("noRedirect");
+                router.setChildren(buildMenus(cMenus));
+            } else if (menu.isMenuFrame()) {
+                String frameName = StrUtils.upperFirst(menu.getPath()) + menu.getId();
+                router.setMeta(null);
+                List<RouterVo> childrenList = new ArrayList<>();
+                RouterVo children = new RouterVo();
+                children.setPath(menu.getPath());
+                children.setComponent(menu.getComp());
+                children.setName(frameName);
+                children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), !menu.getCatag(), menu.getPath()));
+                children.setQuery(menu.getParam());
+                childrenList.add(children);
+                router.setChildren(childrenList);
+            } else if (menu.getPid().equals(Constants.TOP_PARENT_ID) && menu.isInnerLink()) {
+                router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
+                router.setPath("/");
+                List<RouterVo> childrenList = new ArrayList<>();
+                RouterVo children = new RouterVo();
+                String routerPath = SysPermMenu.innerLinkReplaceEach(menu.getPath());
+                String innerLinkName = StrUtils.upperFirst(routerPath) + menu.getId();
+                children.setPath(routerPath);
+                children.setComponent(SystemConstants.INNER_LINK);
+                children.setName(innerLinkName);
+                children.setMeta(new MetaVo(menu.getName(), menu.getIcon(), menu.getPath()));
+                childrenList.add(children);
+                router.setChildren(childrenList);
+            }
+            routers.add(router);
+        }
+        return routers;
+    }
+
+    private final SysOrgUserDao userDao;
+
+    private final SysPermMenuDao menuDao;
+
+}

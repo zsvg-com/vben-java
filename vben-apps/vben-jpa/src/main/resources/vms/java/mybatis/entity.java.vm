@@ -1,0 +1,44 @@
+package ${packageName};
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import vben.common.mybatis.core.domain.BaseMainEntity;
+import java.io.Serial;
+
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@TableName("$table.bunam")
+public class $table.bunam extends BaseMainEntity {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+#foreach ($field in $fields)
+    #if($field.type=="string")
+    private String $field.name;
+
+    #elseif($field.type=="int")
+    private Integer $field.name;
+
+    #elseif($field.type=="long")
+    private Long $field.name;
+
+    #elseif($field.type=="bool")
+    private Boolean $field.name;
+
+    #elseif($field.type=="date")
+    private Date $field.name;
+
+    #elseif($field.type=="decimal")
+    private BigDecimal $field.name;
+
+    #end
+#end
+
+}
+
+
+
+

@@ -1,0 +1,37 @@
+package ${packageName};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import vben.common.jpa.entity.BaseMainEntity;
+
+@Entity
+@Getter
+@Setter
+public class $table.bunam extends BaseMainEntity {
+
+#foreach ($field in $fields)
+    #if($field.type=="string")
+    @Column(length = $field.length)
+    private String $field.name;
+
+    #elseif($field.type=="int")
+    private Integer $field.name;
+
+    #elseif($field.type=="long")
+    private Long $field.name;
+
+    #elseif($field.type=="bool")
+    private Boolean $field.name;
+
+    #elseif($field.type=="date")
+    private Date $field.name;
+
+    #elseif($field.type=="decimal")
+    private BigDecimal $field.name;
+
+    #end
+#end
+
+}

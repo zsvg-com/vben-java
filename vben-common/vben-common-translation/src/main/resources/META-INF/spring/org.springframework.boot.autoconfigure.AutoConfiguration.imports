@@ -1,0 +1,6 @@
+vben.common.translation.config.TranslationConfig
+vben.common.translation.core.impl.DeptNameTranslationImpl
+vben.common.translation.core.impl.DictTypeTranslationImpl
+vben.common.translation.core.impl.OssUrlTranslationImpl
+vben.common.translation.core.impl.UserNameTranslationImpl
+vben.common.translation.core.impl.NicknameTranslationImpl

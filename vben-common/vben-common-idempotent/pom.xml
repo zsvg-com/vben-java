@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.zsvg</groupId>
+        <artifactId>vben-common</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vben-common-idempotent</artifactId>
+
+    <description>
+        vben-common-idempotent 幂等功能
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zsvg</groupId>
+            <artifactId>vben-common-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zsvg</groupId>
+            <artifactId>vben-common-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

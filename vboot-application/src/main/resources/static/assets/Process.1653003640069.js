@@ -1,1 +1,0 @@
-import{C as e,g as o,E as s,D as p}from"./common.1653003640069.js";import"./index.1653003640069.js";import"./vue.1653003640069.js";import"./store.1653003640069.js";const r=[e,o({name:"\u5168\u5C40\u76D1\u542C\u5668"}),s,p];var a={"bpmn:Process":r,"bpmn:SubProcess":r};export{a as default};

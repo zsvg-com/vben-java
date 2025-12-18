@@ -1,0 +1,32 @@
+﻿{
+  path: '/${table.name.replace("_","/")}',
+  name: '${table.bunam}',
+  component: () => import('/@/views/${table.name.replace("_","/")}/index.vue'),
+  meta:{
+    title: '${table.remark}清单',
+    isLink: '',
+    isHide: false,
+    isKeepAlive: true,
+    isAffix: false,
+    isIframe: false,
+    roles: ['admin'],
+    icon: 'ele-Tickets',
+  },
+},
+#if($table.edtyp=="tab")
+{
+  path: '/${table.name.replace("_","/")}/edit',
+  name: '${table.bunam}Edit',
+  component: () => import('/@/views/${table.name.replace("_","/")}/edit.vue'),
+  meta: {
+    title: '${table.remark}编辑',
+    isLink: '',
+    isHide: true,
+    isKeepAlive: true,
+    isAffix: false,
+    isIframe: false,
+    roles: ['admin'],
+    icon: 'ele-Tickets',
+  },
+},
+#end

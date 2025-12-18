@@ -1,1 +1,0 @@
-import{_ as e}from"./index.1653003640069.js";import{b as o,o as r}from"./vue.1653003640069.js";const n={name:"index.vue"};function t(a,c,s,p,_,i){return r(),o("div",null," \u8FD9\u662F\u4E3B\u9875 ")}var m=e(n,[["render",t]]);export{m as default};

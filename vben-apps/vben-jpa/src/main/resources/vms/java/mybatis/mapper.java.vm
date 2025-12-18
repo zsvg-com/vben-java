@@ -1,0 +1,10 @@
+package ${packageName};
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ${table.bunam}Mapper extends BaseMapper<${table.bunam}> {
+
+}
+

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zsvg</groupId>
+    <artifactId>vben-common-bom</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <description>
+        vben-common-bom common依赖项
+    </description>
+
+    <properties>
+        <revision>1.0.0</revision>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 核心模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 接口模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-doc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- excel -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 幂等 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-idempotent</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+<!--            &lt;!&ndash; 调度模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.zsvg</groupId>-->
+<!--                <artifactId>vben-common-job</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
+
+            <!-- 日志记录 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 邮件服务 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-mail</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 数据库服务 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- OSS -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-oss</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 限流 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-ratelimiter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 缓存服务 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- satoken -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 安全模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 脱敏模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-sensitive</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 短信模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-sms</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-social</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 翻译模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-translation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- web服务 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 序列化模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-json</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 数据库加解密模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-encrypt</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+<!--            &lt;!&ndash; 租户模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.zsvg</groupId>-->
+<!--                <artifactId>vben-common-tenant</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
+
+            <!-- WebSocket模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-websocket</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- SSE模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-sse</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-jdbc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- jpa模块 -->
+            <dependency>
+                <groupId>com.zsvg</groupId>
+                <artifactId>vben-common-jpa</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

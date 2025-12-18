@@ -1,6 +1,0 @@
-${AnsiColor.GREEN}
-
-vboot V0.1 一个开箱即用的快速开发平台.JAVA版
-
-${AnsiColor.GREEN}
-${spring-boot.version}

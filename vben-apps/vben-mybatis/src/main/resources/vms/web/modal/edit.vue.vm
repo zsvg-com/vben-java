@@ -1,0 +1,59 @@
+<script lang="ts" setup>
+import { requestClient } from '#/api/request';
+import { modalSave } from '#/utils/page/edit';
+
+const emits = defineEmits(['close']);
+const state = reactive({
+  url: '/${table.name.replace("_","/")}',
+  show: false,
+  form: {} as any,
+});
+const formRef = ref();
+const { form } = toRefs(state);
+
+const open = async (data: any) => {
+  state.show = true;
+  await nextTick();
+  formRef.value?.resetFields();
+  state.form = data && data.id ? await requestClient.get(`${state.url}/info/${data.id}`) : { avtag: true };
+};
+defineExpose({ open });
+
+const save = async () => {
+  await modalSave({ formRef: formRef.value, state });
+  emits('close');
+};
+</script>
+
+<template>
+    <el-dialog v-model="state.show" title="${table.remark}维护" draggable width="800px">
+        <el-form ref="formRef" :model="form" label-width="140px" class="zform">
+            <el-form-item label="${table.remark}名称" prop="name" :rules="[{ required: true, message: '${table.remark}名称不能为空' }]">
+                <el-input v-model="form.name" />
+            </el-form-item>
+            <el-form-item label="备注" prop="notes">
+                <el-input v-model="form.notes" :rows="3" type="textarea" />
+            </el-form-item>
+            <template v-if="form.crtim">
+                <el-form-item label="创建人" style="width: 50%">
+                    <div>{{ form.cruna }}</div>
+                </el-form-item>
+                <el-form-item label="创建时间" style="width: 50%">
+                    <div>{{ form.crtim }}</div>
+                </el-form-item>
+                <el-form-item label="更新人" style="width: 50%">
+                    <div>{{ form.upuna }}</div>
+                </el-form-item>
+                <el-form-item label="更新时间" style="width: 50%">
+                    <div>{{ form.uptim }}</div>
+                </el-form-item>
+            </template>
+        </el-form>
+        <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="save">保 存</el-button>
+        <el-button @click="state.show = false">关 闭</el-button>
+      </span>
+        </template>
+    </el-dialog>
+</template>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vben-java</artifactId>
+        <groupId>com.zsvg</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>vben-common-bom</module>
+        <module>vben-common-core</module>
+        <module>vben-common-encrypt</module>
+        <module>vben-common-json</module>
+        <module>vben-common-log</module>
+        <module>vben-common-redis</module>
+        <module>vben-common-satoken</module>
+        <module>vben-common-security</module>
+        <module>vben-common-web</module>
+        <module>vben-common-oss</module>
+        <module>vben-common-jdbc</module>
+        <module>vben-common-jpa</module>
+        <module>vben-common-mybatis</module>
+        <module>vben-common-sse</module>
+        <module>vben-common-social</module>
+        <module>vben-common-doc</module>
+        <module>vben-common-excel</module>
+        <module>vben-common-idempotent</module>
+        <module>vben-common-mail</module>
+        <module>vben-common-ratelimiter</module>
+        <module>vben-common-sensitive</module>
+        <module>vben-common-sms</module>
+        <module>vben-common-translation</module>
+        <module>vben-common-websocket</module>
+    </modules>
+
+    <artifactId>vben-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        通用供依赖层
+    </description>
+
+</project>

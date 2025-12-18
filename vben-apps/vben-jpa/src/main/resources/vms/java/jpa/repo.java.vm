@@ -1,0 +1,9 @@
+package ${packageName};
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ${table.bunam}Repo extends JpaRepository<${table.bunam},Long> {
+
+
+}
+

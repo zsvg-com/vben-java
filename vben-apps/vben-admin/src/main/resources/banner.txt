@@ -1,0 +1,11 @@
+Application Version: ${revision}
+Spring Boot Version: ${spring-boot.version}
+
+8b           d8 88                                           db                88                    88
+`8b         d8' 88                                          d88b               88                    ""
+ `8b       d8'  88                                         d8'`8b              88
+  `8b     d8'   88,dPPYba,   ,adPPYba, 8b,dPPYba,         d8'  `8b     ,adPPYb,88 88,dPYba,,adPYba,  88 8b,dPPYba,
+   `8b   d8'    88P'    "8a a8P_____88 88P'   `"8a       d8YaaaaY8b   a8"    `Y88 88P'   "88"    "8a 88 88P'   `"8a
+    `8b d8'     88       d8 8PP""""""" 88       88      d8""""""""8b  8b       88 88      88      88 88 88       88
+     `888'      88b,   ,a8" "8b,   ,aa 88       88     d8'        `8b "8a,   ,d88 88      88      88 88 88       88
+      `8'       8Y"Ybbd8"'   `"Ybbd8"' 88       88    d8'          `8b `"8bbdP"Y8 88      88      88 88 88       88
