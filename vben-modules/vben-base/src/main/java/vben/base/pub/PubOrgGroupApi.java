@@ -19,8 +19,8 @@ public class PubOrgGroupApi {
 
     @GetMapping("tree")
     public R<List<Stree>> getTree(String name) {
-        String sql="select id,pid,name,'cate' type from sys_org_group_cate " +
-                "union all select id,catid as pid,name,'group' type from sys_org_group";
+        String sql="select id,pid,name,'cate' type from sys_group_cate " +
+                "union all select id,catid as pid,name,'group' type from sys_group";
         List<Stree> list = jdbcHelper.findStreeList(sql);
         return R.ok(list);
     }
@@ -28,12 +28,12 @@ public class PubOrgGroupApi {
     @GetMapping("list")
     public R<List<SidName>> getList(String pid,String type,String name) {
         if("cate".equals(type)){
-            String sql="select id,name from sys_org_group where catid=? order by ornum";
+            String sql="select id,name from sys_group where catid=? order by ornum";
             return R.ok(jdbcHelper.findSidNameList(sql, pid));
         }else if("group".equals(type)){
-            String sql="select id,name from sys_org_group where id=? order by ornum";
+            String sql="select id,name from sys_group where id=? order by ornum";
             List<SidName> list = jdbcHelper.findSidNameList(sql, pid);
-            String sql2="select t.id,t.name from sys_org t inner join sys_org_group_org o on o.oid=t.id where o.gid=?";
+            String sql2="select t.id,t.name from sys_org t inner join sys_group_org o on o.oid=t.id where o.gid=?";
             list.addAll(jdbcHelper.findSidNameList(sql2, pid));
             return R.ok(list);
         }else{

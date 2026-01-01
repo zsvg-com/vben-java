@@ -9,10 +9,9 @@ import vben.base.auth.login.AuthLoginService;
 import vben.base.auth.login.vo.LoginVo;
 import vben.base.auth.login.vo.SysClientVo;
 import vben.base.auth.user.AuthUserVo;
-import vben.base.sys.org.user.SysOrgUser;
-import vben.base.sys.org.user.SysOrgUserDao;
+import vben.base.sys.user.SysUser;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.Constants;
-import vben.common.core.constant.GlobalConstants;
 import vben.common.core.constant.SystemConstants;
 import vben.common.core.domain.model.LoginUser;
 import vben.common.core.domain.model.SmsLoginBody;
@@ -24,7 +23,6 @@ import vben.common.core.utils.ObjectUtils;
 import vben.common.core.utils.StrUtils;
 import vben.common.core.utils.ValidatorUtils;
 import vben.common.json.utils.JsonUtils;
-import vben.common.redis.utils.RedisUtils;
 import vben.common.satoken.utils.LoginHelper;
 
 /**
@@ -37,7 +35,7 @@ import vben.common.satoken.utils.LoginHelper;
 @RequiredArgsConstructor
 public class SmsAuthStrategy implements IAuthStrategy {
 
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
 
     private final AuthLoginService loginService;
 
@@ -87,17 +85,17 @@ public class SmsAuthStrategy implements IAuthStrategy {
 
 
     private AuthUserVo loadUserByPhonenumber(String phonenumber) {
-        SysOrgUser orgUser = userDao.findByMonum(phonenumber);
+        SysUser orgUser = userDao.findByMonum(phonenumber);
         AuthUserVo user=new AuthUserVo();
         user.setUserId(orgUser.getId());
-        user.setUserName(orgUser.getUsnam());
-        user.setPassword(orgUser.getPacod());
-        user.setNickName(orgUser.getNinam());
+        user.setUserName(orgUser.getUsername());
+        user.setPassword(orgUser.getPassword());
+        user.setNickName(orgUser.getName());
         user.setDeptId(orgUser.getDepid());
         user.setDeptName(orgUser.getDepna());
         user.setStatus(orgUser.getAvtag()?"0":"1");
         user.setAvatar(orgUser.getAvatar());
-        //user.set(orgUser.getUsnam());
+        //user.set(orgUser.getUsername());
 
         if (ObjectUtils.isNull(user)) {
             log.info("登录用户：{} 不存在.", phonenumber);

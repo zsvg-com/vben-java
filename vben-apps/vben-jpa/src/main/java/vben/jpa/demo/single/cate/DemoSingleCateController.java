@@ -30,7 +30,7 @@ public class DemoSingleCateController {
      * @return XX树状数据
      */
     @GetMapping("tree")
-    @SaCheckPermission("single:main:query")
+    @SaCheckPermission("single:cate:query")
     public R<List<Ltree>> getTree(String name, Long id) {
         Sqler sqler = new Sqler(table);
         List<Ltree> list = service.findTreeList(sqler, name, id);
@@ -43,7 +43,7 @@ public class DemoSingleCateController {
      * @return XX列表数据
      */
     @GetMapping("list")
-    @SaCheckPermission("single:main:query")
+    @SaCheckPermission("single:cate:query")
     public R<List<DemoSingleCate>> getList(String name) {
         Sqler sqler = new Sqler(table);
         sqler.addLike("t.name", name);
@@ -57,7 +57,7 @@ public class DemoSingleCateController {
      * @param id ID
      * @return XX对象
      */
-    @SaCheckPermission("single:main:query")
+    @SaCheckPermission("single:cate:query")
     @GetMapping("info/{id}")
     public R<DemoSingleCate> info(@PathVariable Long id) {
         DemoSingleCate cate = service.select(id);

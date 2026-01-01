@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Service;
-import vben.base.sys.org.user.SysOrgUser;
-import vben.base.sys.org.user.SysOrgUserDao;
+import vben.base.sys.user.SysUser;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.SystemConstants;
 import vben.common.core.domain.model.LoginUser;
 import vben.common.core.domain.model.SocialLoginBody;
@@ -44,7 +44,7 @@ public class SocialAuthStrategy implements IAuthStrategy {
 
     private final SocialProperties socialProperties;
     private final ISysSocialService sysSocialService;
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
     private final AuthLoginService loginService;
 
     /**
@@ -109,12 +109,12 @@ public class SocialAuthStrategy implements IAuthStrategy {
     }
 
     private AuthUserVo loadUser(String userId) {
-        SysOrgUser orgUser = userDao.findById(userId);
+        SysUser orgUser = userDao.findById(userId);
         AuthUserVo user=new AuthUserVo();
-        user.setUserName(orgUser.getUsnam());
+        user.setUserName(orgUser.getUsername());
         user.setUserId(orgUser.getId());
-        user.setPassword(orgUser.getPacod());
-        user.setNickName(orgUser.getNinam());
+        user.setPassword(orgUser.getPassword());
+        user.setNickName(orgUser.getName());
         user.setDeptId(orgUser.getDepid());
         user.setDeptName(orgUser.getDepna());
         user.setUserType("sys_user");

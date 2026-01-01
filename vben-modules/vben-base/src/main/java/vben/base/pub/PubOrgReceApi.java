@@ -4,8 +4,8 @@ package vben.base.pub;
 import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import vben.base.sys.org.rece.SysOrgRece;
-import vben.base.sys.org.rece.SysOrgReceService;
+import vben.base.sys.rece.SysRece;
+import vben.base.sys.rece.SysReceService;
 import vben.common.core.domain.R;
 import vben.common.jdbc.sqler.JdbcHelper;
 import vben.common.jdbc.sqler.Sqler;
@@ -28,22 +28,22 @@ public class PubOrgReceApi {
         List<Map<String, Object>> mapList = new ArrayList<>();
         String userId = LoginHelper.getUserId();
         if ((type & 1) != 0) {//部门
-            Sqler deptSqler = new Sqler("t.oid as id", "sys_org_rece");
-            deptSqler.addInnerJoin("o.name", "sys_org_dept o", "o.id=t.oid");
+            Sqler deptSqler = new Sqler("t.oid as id", "sys_rece");
+            deptSqler.addInnerJoin("o.name", "sys_dept o", "o.id=t.oid");
             deptSqler.addEqual("t.useid", userId);
             mapList.addAll(jdbcHelper.findMapList(deptSqler));
         }
         if ((type & 2) != 0) {//用户
-            Sqler userSqler = new Sqler("t.oid as id", "sys_org_rece");
-            userSqler.addInnerJoin("u.name", "sys_org_user u", "u.id=t.oid");
-            userSqler.addInnerJoin("d.name as dept", "sys_org_dept d", "d.id=u.depid");
+            Sqler userSqler = new Sqler("t.oid as id", "sys_rece");
+            userSqler.addInnerJoin("u.name", "sys_user u", "u.id=t.oid");
+            userSqler.addInnerJoin("d.name as dept", "sys_dept d", "d.id=u.depid");
             userSqler.addEqual("t.useid", userId);
             mapList.addAll(jdbcHelper.findMapList(userSqler));
         }
         if ((type & 4) != 0) {//岗位
-            Sqler postSqler = new Sqler("t.oid as id", "sys_org_rece");
-            postSqler.addInnerJoin("p.name", "sys_org_post p", "p.id=t.oid");
-            postSqler.addInnerJoin("d.name as dept", "sys_org_dept d", "d.id=p.depid");
+            Sqler postSqler = new Sqler("t.oid as id", "sys_rece");
+            postSqler.addInnerJoin("p.name", "sys_post p", "p.id=t.oid");
+            postSqler.addInnerJoin("d.name as dept", "sys_dept d", "d.id=p.depid");
             postSqler.addEqual("t.useid", userId);
             mapList.addAll(jdbcHelper.findMapList(postSqler));
         }
@@ -52,7 +52,7 @@ public class PubOrgReceApi {
     }
 
     @PostMapping
-    public R<Void> post(@RequestBody List<SysOrgRece> reces) {
+    public R<Void> post(@RequestBody List<SysRece> reces) {
         String userId = LoginHelper.getUserId();
         scheduledExecutorService.schedule(() -> {
             if(reces!=null&&reces.size()>0){
@@ -64,7 +64,7 @@ public class PubOrgReceApi {
 
     private final JdbcHelper jdbcHelper;
 
-    private final SysOrgReceService service;
+    private final SysReceService service;
 
     private final ScheduledExecutorService scheduledExecutorService;
 }

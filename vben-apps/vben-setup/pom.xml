@@ -30,10 +30,10 @@
             <artifactId>ojdbc8</artifactId>
         </dependency>
 <!--        &lt;!&ndash; 兼容oracle低版本 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.oracle.database.nls</groupId>-->
-<!--            <artifactId>orai18n</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.oracle.database.nls</groupId>
+            <artifactId>orai18n</artifactId>
+        </dependency>
 <!--        &lt;!&ndash; PostgreSql &ndash;&gt;-->
         <dependency>
             <groupId>org.postgresql</groupId>

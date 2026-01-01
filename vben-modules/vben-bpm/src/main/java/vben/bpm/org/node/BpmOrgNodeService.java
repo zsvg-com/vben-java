@@ -209,16 +209,16 @@ public class BpmOrgNodeService {
         List<SidOrnum> list2;
 
         if(StrUtils.isNotBlank(dragDept.getPid())){
-            String sql = "select id,ornum from sys_org_role_node where ornum>? and pid=?";
+            String sql = "select id,ornum from sys_role_node where ornum>? and pid=?";
             list2 = jdbcHelper.getTp().query(sql,new Object[]{dragDept.getOrnum(),dragDept.getPid()},
                     new BeanPropertyRowMapper<>(SidOrnum.class));
         }else{
-            String sql = "select id,ornum from sys_org_role_node where ornum>? and treid=? and pid is null";
+            String sql = "select id,ornum from sys_role_node where ornum>? and treid=? and pid is null";
             list2 = jdbcHelper.getTp().query(sql,new Object[]{dragDept.getOrnum(),dragDept.getTreid()},
                     new BeanPropertyRowMapper<>(SidOrnum.class));
         }
 
-        String updateSql = "update sys_org_role_node set ornum=? where id=?";
+        String updateSql = "update sys_role_node set ornum=? where id=?";
         List<Object[]> updateList = new ArrayList<>();
         for (SidOrnum sidOrnum : list2) {
             Object[] arr=new Object[2];
@@ -246,16 +246,16 @@ public class BpmOrgNodeService {
 
             List<SidOrnum> list3;
             if(StrUtils.isNotBlank(dropDept.getPid())){
-                String sql3 = "select id,ornum from sys_org_role_node where ornum>? and pid=?";
+                String sql3 = "select id,ornum from sys_role_node where ornum>? and pid=?";
                 list3 = jdbcHelper.getTp().query(sql3,new Object[]{dropDept.getOrnum(),dropDept.getPid()},
                         new BeanPropertyRowMapper<>(SidOrnum.class));
             }else{
-                String sql3 = "select id,ornum from sys_org_role_node where ornum>? and treid=? and pid is null";
+                String sql3 = "select id,ornum from sys_role_node where ornum>? and treid=? and pid is null";
                 list3 = jdbcHelper.getTp().query(sql3,new Object[]{dropDept.getOrnum(),dropDept.getTreid()},
                         new BeanPropertyRowMapper<>(SidOrnum.class));
             }
 
-            String updateSql3 = "update sys_org_role_node set ornum=? where id=?";
+            String updateSql3 = "update sys_role_node set ornum=? where id=?";
             List<Object[]> updateList3 = new ArrayList<>();
             for (SidOrnum sidOrnum : list3) {
                 Object[] arr=new Object[2];
@@ -265,7 +265,7 @@ public class BpmOrgNodeService {
             }
             jdbcHelper.batch(updateSql3, updateList3);
             dropDept.setOrnum(dropDept.getOrnum()+1);
-            String updateSql4 = "update sys_org_role_node set ornum=? where id=?";
+            String updateSql4 = "update sys_role_node set ornum=? where id=?";
             jdbcHelper.update(updateSql4, dropDept.getOrnum(), dropDept.getId());
         }
         else if ("after".equals(bo.getType()))

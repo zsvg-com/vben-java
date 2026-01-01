@@ -3,10 +3,8 @@ package vben.base.auth.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vben.base.sys.org.user.SysOrgUser;
-import vben.base.sys.org.user.SysOrgUserDao;
-import vben.base.sys.perm.auth.RouterVo;
-import vben.base.sys.perm.auth.SysPermAuthService;
+import vben.base.sys.user.SysUser;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.domain.R;
 import vben.common.core.domain.model.LoginUser;
 import vben.common.satoken.utils.LoginHelper;
@@ -17,9 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthUserApi {
 
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
 
-    private final SysPermAuthService authService;
+    private final SysAuthService authService;
 
     /**
      * 获取用户信息
@@ -30,7 +28,7 @@ public class AuthUserApi {
     public R<UserInfoVo> getInfo() {
         UserInfoVo userInfoVo = new UserInfoVo();
         LoginUser loginUser = LoginHelper.getLoginUser();
-        SysOrgUser user = userDao.findById(loginUser.getUserId()+"");
+        SysUser user = userDao.findById(loginUser.getUserId()+"");
         AuthUserVo userVo = new AuthUserVo();
         userVo.setUserId(loginUser.getUserId());
         userVo.setUserName(loginUser.getUsername());
@@ -39,7 +37,7 @@ public class AuthUserApi {
         userVo.setDeptId(loginUser.getDeptId());
         userVo.setAvatar(user.getAvatar());
         userVo.setPhonenumber(user.getMonum());
-        userVo.setSex(user.getSex());
+        userVo.setGender(user.getGender());
         userInfoVo.setUser(userVo);
         userInfoVo.setPermissions(loginUser.getMenuPermission());
         userInfoVo.setRoles(loginUser.getRolePermission());

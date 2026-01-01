@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import vben.base.sys.org.user.SysOrgUserDao;
-import vben.base.sys.perm.api.SysPermApiDao;
+import vben.base.sys.user.SysUserDao;
+import vben.base.sys.api.SysApiDao;
 import vben.common.core.constant.CacheConstants;
 import vben.common.core.constant.Constants;
 import vben.common.core.domain.model.LoginUser;
@@ -43,9 +43,9 @@ public class AuthLoginService {
     @Value("${user.password.lockTime}")
     private Integer lockTime;
 
-    private final SysPermApiDao apiDao;
+    private final SysApiDao apiDao;
 
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
 
 
     /**

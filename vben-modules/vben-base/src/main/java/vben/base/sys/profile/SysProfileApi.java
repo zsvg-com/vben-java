@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import vben.base.sys.org.user.SysOrgUser;
-import vben.base.sys.org.user.SysOrgUserService;
+import vben.base.sys.user.SysUser;
+import vben.base.sys.user.SysUserService;
 import vben.base.tool.oss.main.ToolOssMainService;
 import vben.base.tool.oss.root.Zfile;
 import vben.base.tool.oss.service.SysOssService;
@@ -35,7 +35,7 @@ import java.util.Arrays;
 @RequestMapping("/system/user/profile")
 public class SysProfileApi extends BaseController {
 
-    private final SysOrgUserService userService;
+    private final SysUserService userService;
 
     private final SysOssService ossService;
 
@@ -46,13 +46,13 @@ public class SysProfileApi extends BaseController {
      */
     @GetMapping
     public R<ProfileVo> profile() {
-        SysOrgUser user = userService.findById(LoginHelper.getUserId());
+        SysUser user = userService.findById(LoginHelper.getUserId());
         ProfileUserVo vo=new ProfileUserVo();
         vo.setUserId(user.getId());
         vo.setEmail(user.getEmail());
-        vo.setSex(user.getSex());
+        vo.setGender(user.getGender());
         vo.setDeptId(user.getDepid());
-        vo.setUserName(user.getUsnam());
+        vo.setUserName(user.getUsername());
         vo.setUserType(user.getType()+"");
         vo.setNickName(user.getName());
         vo.setPhonenumber(user.getMonum());
@@ -73,12 +73,10 @@ public class SysProfileApi extends BaseController {
      */
     @PutMapping
     public R<Void> updateProfile(@Validated @RequestBody SysUserProfileBo profile) {
-        SysOrgUser user = userService.findById(LoginHelper.getUserId());
+        SysUser user = userService.findById(LoginHelper.getUserId());
         user.setEmail(profile.getEmail());
         user.setName(profile.getNickName());
-        user.setNinam(profile.getNickName());
-        user.setSex(profile.getSex());
-        user.setSex(profile.getSex());
+        user.setGender(profile.getGender());
         user.setMonum(profile.getPhonenumber());
         userService.update(user);
         return R.ok();

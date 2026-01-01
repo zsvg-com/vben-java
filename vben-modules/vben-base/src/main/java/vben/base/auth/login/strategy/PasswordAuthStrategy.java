@@ -6,8 +6,8 @@ import cn.hutool.crypto.digest.BCrypt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import vben.base.sys.org.user.SysOrgUser;
-import vben.base.sys.org.user.SysOrgUserDao;
+import vben.base.sys.user.SysUser;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.Constants;
 import vben.common.core.constant.GlobalConstants;
 import vben.common.core.constant.SystemConstants;
@@ -42,7 +42,7 @@ public class PasswordAuthStrategy implements IAuthStrategy {
 
     private final CaptchaProperties captchaProperties;
     private final AuthLoginService loginService;
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
 
 //    @Override
 //    public LoginVo login(String body, SysClientVo client) {
@@ -145,17 +145,16 @@ public class PasswordAuthStrategy implements IAuthStrategy {
 
     private AuthUserVo loadUserByUsername(String username) {
 //        SysUserVo user = userService.findById().selectVoOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username));
-        SysOrgUser orgUser = userDao.findByUsnam(username);
+        SysUser orgUser = userDao.findByUsername(username);
         AuthUserVo user=new AuthUserVo();
         user.setUserId(orgUser.getId());
-        user.setUserName(orgUser.getUsnam());
-        user.setPassword(orgUser.getPacod());
-        user.setNickName(orgUser.getNinam());
+        user.setUserName(orgUser.getUsername());
+        user.setPassword(orgUser.getPassword());
+        user.setNickName(orgUser.getName());
         user.setDeptId(orgUser.getDepid());
         user.setDeptName(orgUser.getDepna());
         user.setStatus(orgUser.getAvtag()?"0":"1");
         user.setAvatar(orgUser.getAvatar());
-        //user.set(orgUser.getUsnam());
 
         if (ObjectUtils.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);

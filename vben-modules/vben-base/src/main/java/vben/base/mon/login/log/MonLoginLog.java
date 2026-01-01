@@ -23,7 +23,7 @@ public class MonLoginLog {
     /**
      * 用户账号
      */
-    private String usnam;
+    private String username;
 
     /**
      * 客户端

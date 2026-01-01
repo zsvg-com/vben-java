@@ -9,7 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.user.SysOrgUserDao;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.Constants;
 import vben.common.core.utils.IdUtils;
 import vben.common.core.utils.ServletUtils;
@@ -66,7 +66,7 @@ public class MonLoginLogService {
         // 封装对象
         MonLoginLog log = new MonLoginLog();
         log.setTenid(logininforEvent.getTenantId());
-        log.setUsnam(logininforEvent.getUsername());
+        log.setUsername(logininforEvent.getUsername());
 //        if (ObjectUtils.isNotNull(client)) {
 //            logininfor.setClientKey(client.getClientKey());
 //            logininfor.setDeviceType(client.getDeviceType());
@@ -115,5 +115,5 @@ public class MonLoginLogService {
 
     private final MonLoginLogDao dao;
 
-    private final SysOrgUserDao userDao;
+    private final SysUserDao userDao;
 }

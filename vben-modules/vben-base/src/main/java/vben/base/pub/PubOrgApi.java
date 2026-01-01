@@ -36,7 +36,7 @@ public class PubOrgApi {
             return R.ok(mapList);
         }
         if ((type & 1) != 0) {//部门
-            Sqler deptSqler = new Sqler("id,name","sys_org_dept");
+            Sqler deptSqler = new Sqler("id,name","sys_dept");
             if (StrUtils.isNotBlank(name)) {
                 deptSqler.addLike("t.name", name);
             } else {
@@ -47,7 +47,7 @@ public class PubOrgApi {
             mapList.addAll(list);
         }
         if ((type & 2) != 0) {//用户
-            Sqler userSqler = new Sqler("id,name,avatar","sys_org_user");
+            Sqler userSqler = new Sqler("id,name,avatar","sys_user");
             if (StrUtils.isNotBlank(name)) {
                 userSqler.addLike("t.name", name);
             } else {
@@ -58,7 +58,7 @@ public class PubOrgApi {
             mapList.addAll(list);
         }
         if ((type & 4) != 0) {//岗位
-            Sqler postSqler = new Sqler("id,name","sys_org_post");
+            Sqler postSqler = new Sqler("id,name","sys_post");
             if (StrUtils.isNotBlank(name)) {
                 postSqler.addLike("t.name", name);
             } else {

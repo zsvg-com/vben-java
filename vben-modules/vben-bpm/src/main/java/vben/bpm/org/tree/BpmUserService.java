@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.root.Org;
+import vben.base.sys.org.Org;
 import vben.common.core.utils.StrUtils;
 import vben.common.jdbc.root.DbType;
 import vben.common.jdbc.root.Db;
@@ -21,7 +21,7 @@ public class BpmUserService {
 
     private final JdbcHelper jdbcHelper;
 
-    private final BpmOrgTreeService sysOrgRoleTreeService;
+    private final BpmOrgTreeService roleTreeService;
 
     /**
      * 计算目标节点处理人
@@ -47,7 +47,7 @@ public class BpmUserService {
                     String sql = "select cruid from bpm_proc_inst where id=?";
                     cruid = jdbcHelper.findString(sql, proid);
                 }
-                Org org = sysOrgRoleTreeService.calc(cruid, sysOrg.getId());
+                Org org = roleTreeService.calc(cruid, sysOrg.getId());
                 tamen = org.getName();
             } else {
                 tamen = sysOrg.getName();
@@ -77,7 +77,7 @@ public class BpmUserService {
                         String sql = "select cruid from bpm_proc_inst where id=?";
                         cruid = jdbcHelper.findString(sql, proid);
                     }
-                    Org org = sysOrgRoleTreeService.calc(cruid, sysOrg.getId());
+                    Org org = roleTreeService.calc(cruid, sysOrg.getId());
                     tamen += org.getName() + ";";
                 } else {
                     tamen += sysOrg.getName() + ";";
@@ -90,7 +90,7 @@ public class BpmUserService {
 
 
     public List<String> findPostIdList(String userId) {
-        String postSql = "select pid as id from sys_org_post_org where oid=?";
+        String postSql = "select pid as id from sys_post_org where oid=?";
         return jdbcHelper.findSlist(postSql, userId);
     }
 }

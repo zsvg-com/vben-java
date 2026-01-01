@@ -36,7 +36,7 @@ public class ToolOssMainApi {
     public R<PageData> get(String name) {
         Sqler sqler = new Sqler("t.name,t.id,t.type,t.crtim", "tool_oss_main");
         sqler.addInnerJoin("f.fsize,f.service,f.path", "tool_oss_file f", "f.id=t.filid");
-        sqler.addLeftJoin("u.name cruna", "sys_org_user u", "u.id=t.cruid");
+        sqler.addLeftJoin("u.name cruna", "sys_user u", "u.id=t.cruid");
         sqler.addLike("t.name", name);
         sqler.addOrder("t.crtim desc");
         return R.ok(service.findPageData(sqler));

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.root.Org;
+import vben.base.sys.org.Org;
 import vben.common.core.utils.IdUtils;
 import vben.common.jdbc.sqler.JdbcHelper;
 import vben.bpm.org.role.BpmOrgRole;
@@ -71,7 +71,7 @@ public class BpmOrgTreeService {
         if (map == null) {
             sql = "select t.tier \"tier\",m.ornum \"ornum\" from bpm_org_tree_node t " +
                     "inner join bpm_org_role m on m.treid=t.treid " +
-                    "inner join sys_org_user u on u.depid=t.memid where u.id=? and m.id=?";
+                    "inner join sys_user u on u.depid=t.memid where u.id=? and m.id=?";
             map = jdbcHelper.findMap(sql, useid, rolid);
             if (map == null) {
                 return null;

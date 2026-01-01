@@ -107,7 +107,7 @@ public class GenUtils
 //        }
 //        // 类型&性别字段设置下拉框
 //        else if (StringUtils.endsWithIgnoreCase(columnName, "type")
-//                || StringUtils.endsWithIgnoreCase(columnName, "sex"))
+//                || StringUtils.endsWithIgnoreCase(columnName, "gender"))
 //        {
 //            column.setHtmlType(GenConstants.HTML_SELECT);
 //        }

@@ -25,7 +25,7 @@ public class MonLoginLogApi {
     @SaCheckPermission("mon:login:query")
     @GetMapping
     public R<PageData> get() {
-        Sqler sqler = new Sqler("t.id,t.usnam,t.clkey,t.loip,t.loloc,t.browser,t.os,t.sutag,t.himsg,t.lotim","mon_login_log");
+        Sqler sqler = new Sqler("t.id,t.username,t.clkey,t.loip,t.loloc,t.browser,t.os,t.sutag,t.himsg,t.lotim","mon_login_log");
         sqler.addDescOrder("t.lotim");
         return R.ok(service.findPageData(sqler));
     }

@@ -23,7 +23,7 @@ public class SysNotice {
     /**
      * 公告内容
      */
-    private String content;
+    private String cont;
 
     /**
      * 公告类型（1通知 2公告）

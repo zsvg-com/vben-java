@@ -38,7 +38,7 @@ public class SysNoticeEntity {
      */
     @Column(length = 2000)
     @Schema(description = "公告内容")
-    private String content;
+    private String cont;
 
     /**
      * 公告类型（1通知 2公告）

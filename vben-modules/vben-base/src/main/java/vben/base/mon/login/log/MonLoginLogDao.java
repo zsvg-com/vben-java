@@ -26,7 +26,7 @@ public class MonLoginLogDao {
         Isqler isqler = new Isqler("mon_login_log");
         isqler.add("id", main.getId());
         isqler.add("tenid", main.getTenid());
-        isqler.add("usnam", main.getUsnam());
+        isqler.add("username", main.getUsername());
         isqler.add("clkey", main.getClkey());
         isqler.add("detyp", main.getDetyp());
         isqler.add("sutag", main.getSutag());

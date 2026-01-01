@@ -21,7 +21,7 @@ public class SysNoticeInitService {
         SysNoticeEntity n1 = new SysNoticeEntity();
         n1.setId(1L);
         n1.setName("系统停机公告");
-        n1.setContent("系统将于今天晚上20点到22点进行停机维护，请提前做好工作安排");
+        n1.setCont("系统将于今天晚上20点到22点进行停机维护，请提前做好工作安排");
         n1.setOrnum(1);
         n1.setType(1);
         list.add(n1);

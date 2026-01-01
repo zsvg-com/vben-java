@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.root.Org;
+import vben.base.sys.org.Org;
 import vben.common.core.exception.ServiceException;
 import vben.common.core.utils.IdUtils;
 import vben.common.core.utils.StrUtils;

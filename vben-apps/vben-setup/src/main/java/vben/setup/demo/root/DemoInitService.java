@@ -3,10 +3,10 @@ package vben.setup.demo.root;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vben.setup.sys.perm.api.SysPermApiEntity;
-import vben.setup.sys.perm.api.SysPermApiRepo;
-import vben.setup.sys.perm.menu.SysPermMenuEntity;
-import vben.setup.sys.perm.menu.SysPermMenuRepo;
+import vben.setup.sys.api.SysApiEntity;
+import vben.setup.sys.api.SysApiRepo;
+import vben.setup.sys.menu.SysMenuEntity;
+import vben.setup.sys.menu.SysMenuRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.List;
 @Transactional
 public class DemoInitService {
 
-    private final SysPermMenuRepo menuRrepo;
+    private final SysMenuRepo menuRrepo;
 
-    private final SysPermApiRepo apiRepo;
+    private final SysApiRepo apiRepo;
 
     public void init() {
-        List<SysPermMenuEntity> menuList = new ArrayList<>();
-        SysPermMenuEntity m8000 = new SysPermMenuEntity();
+        List<SysMenuEntity> menuList = new ArrayList<>();
+        SysMenuEntity m8000 = new SysMenuEntity();
         m8000.setId(8000L);
         m8000.setIcon("hugeicons:star");
         m8000.setName("使用案例");
@@ -36,7 +36,7 @@ public class DemoInitService {
         m8000.setComp("Layout");
         menuList.add(m8000);
 
-        SysPermMenuEntity m8010 = new SysPermMenuEntity();
+        SysMenuEntity m8010 = new SysMenuEntity();
         m8010.setId(8010L);
         m8010.setComp("demo/single/main/index");
         m8010.setIcon("pajamas:work-item-requirement");
@@ -46,7 +46,7 @@ public class DemoInitService {
         m8010.setPid(8000L);
         menuList.add(m8010);
 
-        SysPermMenuEntity m8020 = new SysPermMenuEntity();
+        SysMenuEntity m8020 = new SysMenuEntity();
         m8020.setId(8020L);
         m8020.setComp("demo/single/cate/index");
         m8020.setIcon("pajamas:work-item-requirement");
@@ -56,7 +56,7 @@ public class DemoInitService {
         m8020.setPid(8000L);
         menuList.add(m8020);
 
-        SysPermMenuEntity m8030 = new SysPermMenuEntity();
+        SysMenuEntity m8030 = new SysMenuEntity();
         m8030.setId(8030L);
         m8030.setComp("demo/link/index");
         m8030.setIcon("pajamas:work-item-requirement");
@@ -68,9 +68,9 @@ public class DemoInitService {
 
         insertMenus(menuList);
 
-        List<SysPermApiEntity> apiList = new ArrayList<>();
+        List<SysApiEntity> apiList = new ArrayList<>();
 
-        SysPermApiEntity a801001 = new SysPermApiEntity();
+        SysApiEntity a801001 = new SysApiEntity();
         a801001.setId(801001L);
         a801001.setOrnum(801001);
         a801001.setName("单一主表-查询");
@@ -78,7 +78,7 @@ public class DemoInitService {
         a801001.setPerm("single:main:query");
         apiList.add(a801001);
 
-        SysPermApiEntity a801002 = new SysPermApiEntity();
+        SysApiEntity a801002 = new SysApiEntity();
         a801002.setId(801002L);
         a801002.setOrnum(801002);
         a801002.setName("单一主表-新增");
@@ -86,7 +86,7 @@ public class DemoInitService {
         a801002.setPerm("single:main:add");
         apiList.add(a801002);
 
-        SysPermApiEntity a801003 = new SysPermApiEntity();
+        SysApiEntity a801003 = new SysApiEntity();
         a801003.setId(801003L);
         a801003.setOrnum(801003);
         a801003.setName("单一主表-修改");
@@ -94,7 +94,7 @@ public class DemoInitService {
         a801003.setPerm("single:main:edit");
         apiList.add(a801003);
 
-        SysPermApiEntity a801004 = new SysPermApiEntity();
+        SysApiEntity a801004 = new SysApiEntity();
         a801004.setId(801004L);
         a801004.setOrnum(801004);
         a801004.setName("单一主表-删除");
@@ -102,7 +102,7 @@ public class DemoInitService {
         a801004.setPerm("single:main:remove");
         apiList.add(a801004);
 
-        SysPermApiEntity a802001 = new SysPermApiEntity();
+        SysApiEntity a802001 = new SysApiEntity();
         a802001.setId(802001L);
         a802001.setOrnum(802001);
         a802001.setName("单一树表-查询");
@@ -110,7 +110,7 @@ public class DemoInitService {
         a802001.setPerm("single:cate:query");
         apiList.add(a802001);
 
-        SysPermApiEntity a802002 = new SysPermApiEntity();
+        SysApiEntity a802002 = new SysApiEntity();
         a802002.setId(802002L);
         a802002.setOrnum(802002);
         a802002.setName("单一树表-新增");
@@ -118,7 +118,7 @@ public class DemoInitService {
         a802002.setPerm("single:cate:add");
         apiList.add(a802002);
 
-        SysPermApiEntity a802003 = new SysPermApiEntity();
+        SysApiEntity a802003 = new SysApiEntity();
         a802003.setId(802003L);
         a802003.setOrnum(802003);
         a802003.setName("单一树表-修改");
@@ -126,7 +126,7 @@ public class DemoInitService {
         a802003.setPerm("single:cate:edit");
         apiList.add(a802003);
 
-        SysPermApiEntity a802004 = new SysPermApiEntity();
+        SysApiEntity a802004 = new SysApiEntity();
         a802004.setId(802004L);
         a802004.setOrnum(802004);
         a802004.setName("单一树表-删除");
@@ -134,7 +134,7 @@ public class DemoInitService {
         a802004.setPerm("single:cate:remove");
         apiList.add(a802004);
 
-        SysPermApiEntity a803001 = new SysPermApiEntity();
+        SysApiEntity a803001 = new SysApiEntity();
         a803001.setId(803001L);
         a803001.setOrnum(803001);
         a803001.setName("关联主表-查询");
@@ -142,7 +142,7 @@ public class DemoInitService {
         a803001.setPerm("link:main:query");
         apiList.add(a803001);
 
-        SysPermApiEntity a803002 = new SysPermApiEntity();
+        SysApiEntity a803002 = new SysApiEntity();
         a803002.setId(803002L);
         a803002.setOrnum(803002);
         a803002.setName("关联主表-新增");
@@ -150,7 +150,7 @@ public class DemoInitService {
         a803002.setPerm("link:main:add");
         apiList.add(a803002);
 
-        SysPermApiEntity a803003 = new SysPermApiEntity();
+        SysApiEntity a803003 = new SysApiEntity();
         a803003.setId(803003L);
         a803003.setOrnum(803003);
         a803003.setName("关联主表-修改");
@@ -158,7 +158,7 @@ public class DemoInitService {
         a803003.setPerm("link:main:edit");
         apiList.add(a803003);
 
-        SysPermApiEntity a803004 = new SysPermApiEntity();
+        SysApiEntity a803004 = new SysApiEntity();
         a803004.setId(803004L);
         a803004.setOrnum(803004);
         a803004.setName("关联主表-删除");
@@ -166,7 +166,7 @@ public class DemoInitService {
         a803004.setPerm("link:main:remove");
         apiList.add(a803004);
 
-        SysPermApiEntity a803011 = new SysPermApiEntity();
+        SysApiEntity a803011 = new SysApiEntity();
         a803011.setId(803011L);
         a803011.setOrnum(803011);
         a803011.setName("关联树表-查询");
@@ -174,7 +174,7 @@ public class DemoInitService {
         a803011.setPerm("link:cate:query");
         apiList.add(a803011);
 
-        SysPermApiEntity a803012 = new SysPermApiEntity();
+        SysApiEntity a803012 = new SysApiEntity();
         a803012.setId(803012L);
         a803012.setOrnum(803012);
         a803012.setName("关联树表-新增");
@@ -182,7 +182,7 @@ public class DemoInitService {
         a803012.setPerm("link:cate:add");
         apiList.add(a803012);
 
-        SysPermApiEntity a803013 = new SysPermApiEntity();
+        SysApiEntity a803013 = new SysApiEntity();
         a803013.setId(803013L);
         a803013.setOrnum(803013);
         a803013.setName("关联树表-修改");
@@ -190,7 +190,7 @@ public class DemoInitService {
         a803013.setPerm("link:cate:edit");
         apiList.add(a803013);
 
-        SysPermApiEntity a803014 = new SysPermApiEntity();
+        SysApiEntity a803014 = new SysApiEntity();
         a803014.setId(803014L);
         a803014.setOrnum(803014);
         a803014.setName("关联树表-删除");
@@ -202,8 +202,8 @@ public class DemoInitService {
 
     }
 
-    private void insertMenus(List<SysPermMenuEntity> list) {
-        for (SysPermMenuEntity main : list) {
+    private void insertMenus(List<SysMenuEntity> list) {
+        for (SysMenuEntity main : list) {
             main.setAvtag(true);
             if(main.getCatag()==null){
                 main.setCatag(false);
@@ -222,8 +222,8 @@ public class DemoInitService {
         menuRrepo.saveAll(list);
     }
 
-    private void insertApis(List<SysPermApiEntity> list) {
-        for (SysPermApiEntity api : list) {
+    private void insertApis(List<SysApiEntity> list) {
+        for (SysApiEntity api : list) {
             api.setAvtag(true);
             api.setUptim(api.getCrtim());
         }

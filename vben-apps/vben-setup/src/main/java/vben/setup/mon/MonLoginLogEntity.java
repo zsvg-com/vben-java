@@ -34,7 +34,7 @@ public class MonLoginLogEntity {
      */
     @Column(length = 16)
     @Schema(description = "用户账号")
-    private String usnam;
+    private String username;
 
     /**
      * 客户端

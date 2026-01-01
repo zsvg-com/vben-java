@@ -3,8 +3,8 @@ package vben.bpm.todo.main;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.root.Org;
-import vben.base.sys.org.root.OrgDao;
+import vben.base.sys.org.Org;
+import vben.base.sys.org.OrgDao;
 import vben.common.core.utils.IdUtils;
 import vben.common.jdbc.dto.PageData;
 import vben.common.jdbc.sqler.JdbcHelper;
@@ -53,7 +53,7 @@ public class BpmTodoMainService {
                     todoUser.setUseid(task.getExuid());
                     bpmTodoUserDao.insert(todoUser);
                 } else if (org.getType() == 4) {
-                    String sql = "select oid id from sys_org_post_org where pid=?";
+                    String sql = "select oid id from sys_post_org where pid=?";
                     List<String> userIdList = jdbcHelper.findSlist(sql, task.getExuid());
                     for (String uid : userIdList) {
                         BpmTodoUser todoUser = new BpmTodoUser();

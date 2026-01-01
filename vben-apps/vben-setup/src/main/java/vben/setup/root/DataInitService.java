@@ -7,13 +7,13 @@ import vben.setup.bpm.bus.BpmBusInitService;
 import vben.setup.demo.root.DemoInitService;
 import vben.setup.sys.config.SysConfigInitService;
 import vben.setup.sys.notice.SysNoticeInitService;
-import vben.setup.sys.org.dept.SysOrgDeptInitService;
-import vben.setup.sys.org.group.SysOrgGroupInitService;
-import vben.setup.sys.org.post.SysOrgPostInitService;
-import vben.setup.sys.org.user.SysOrgUserInitService;
-import vben.setup.sys.perm.api.SysPermApiInitService;
-import vben.setup.sys.perm.menu.SysPermMenuInitService;
-import vben.setup.sys.perm.role.SysPermRoleInitService;
+import vben.setup.sys.dept.SysDeptInitService;
+import vben.setup.sys.group.SysGroupInitService;
+import vben.setup.sys.post.SysPostInitService;
+import vben.setup.sys.user.SysUserInitService;
+import vben.setup.sys.api.SysApiInitService;
+import vben.setup.sys.menu.SysMenuInitService;
+import vben.setup.sys.role.SysRoleInitService;
 import vben.setup.tool.dict.ToolDictInitService;
 import vben.setup.tool.num.ToolNumInitService;
 
@@ -55,19 +55,19 @@ public class DataInitService {
 
     private final JdbcHelper jdbcHelper;
 
-    private final SysOrgDeptInitService deptInitService;
+    private final SysDeptInitService deptInitService;
 
-    private final SysOrgUserInitService userInitService;
+    private final SysUserInitService userInitService;
 
-    private final SysOrgPostInitService postInitService;
+    private final SysPostInitService postInitService;
 
-    private final SysOrgGroupInitService groupInitService;
+    private final SysGroupInitService groupInitService;
 
-    private final SysPermMenuInitService menuInitService;
+    private final SysMenuInitService menuInitService;
 
-    private final SysPermApiInitService apiInitService;
+    private final SysApiInitService apiInitService;
 
-    private final SysPermRoleInitService roleInitService;
+    private final SysRoleInitService roleInitService;
 
     private final SysConfigInitService configInitService;
 
