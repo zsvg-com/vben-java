@@ -10,12 +10,12 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 组织架构最近访问记录
+ * 系统参与者最近访问记录
  */
 @Data
 @Entity
 @Table(name = "sys_rece")
-@Schema(description = "组织架构-最近访问记录")
+@Schema(description = "系统参与者-最近访问记录")
 public class SysReceEntity {
 
     /**
@@ -34,15 +34,15 @@ public class SysReceEntity {
     private String useid;
 
     /**
-     * 最近使用的组织架构ID
+     * 最近使用的系统参与者ID
      */
     @Column(length = 36)
-    @Schema(description = "最近使用的组织架构ID")
-    private String oid;
+    @Schema(description = "最近使用的系统参与者ID")
+    private String aid;
 
     /**
      * 最近使用时间
      */
-    @Schema(description = "最近使用的组织架构ID")
+    @Schema(description = "最近使用时间")
     private Date uptim = new Date();
 }

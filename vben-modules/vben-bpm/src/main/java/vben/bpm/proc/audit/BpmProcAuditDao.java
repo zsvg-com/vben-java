@@ -17,8 +17,8 @@ import java.util.List;
 public class BpmProcAuditDao {
 
     public List<BpmAuditVo> findListByProid(Long proid){
-        String sql="select t.id,t.crtim,t.facna,t.facno,t.opnot,t.opinf,o.name hauna,t.atids from bpm_proc_audit t" +
-            " left join sys_org o on o.id=t.hauid where t.proid=? order by t.crtim";
+        String sql="select t.id,t.crtim,t.facna,t.facno,t.opnot,t.opinf,a.name hauna,t.atids from bpm_proc_audit t" +
+            " left join sys_actor a on a.id=t.hauid where t.proid=? order by t.crtim";
         return  jdbcHelper.getTp().query(sql,new BeanPropertyRowMapper<>(BpmAuditVo.class),proid);
     }
 

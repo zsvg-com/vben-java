@@ -85,7 +85,7 @@ public class SysOssConfigController extends BaseController {
      *
      * @param ossConfigIds OSS配置ID串
      */
-    @SaCheckPermission("system:ossConfig:remove")
+    @SaCheckPermission("system:ossConfig:delete")
     @DeleteMapping("/{ossConfigIds}")
     public R<Void> delete(@NotEmpty(message = "主键不能为空")
                           @PathVariable Long[] ossConfigIds) {

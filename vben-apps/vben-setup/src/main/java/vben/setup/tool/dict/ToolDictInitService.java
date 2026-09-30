@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 部门初始化
+ * 字典工具初始化
  */
 @Service
 @RequiredArgsConstructor
@@ -17,11 +17,11 @@ import java.util.List;
 public class ToolDictInitService {
 
     public void init() {
-        List<ToolDictMainEntity> list1 = new ArrayList<>();
+        List<ToolDictEntity> list1 = new ArrayList<>();
         List<ToolDictDataEntity> list2 = new ArrayList<>();
 
 
-        ToolDictMainEntity m1 = new ToolDictMainEntity();
+        ToolDictEntity m1 = new ToolDictEntity();
         m1.setName("操作类型");
         m1.setCode("sys_oper_type");
         m1.setId(1L);
@@ -118,7 +118,7 @@ public class ToolDictInitService {
         d199.setShsty("warning");
         list2.add(d199);
 
-        ToolDictMainEntity m2 = new ToolDictMainEntity();
+        ToolDictEntity m2 = new ToolDictEntity();
         m2.setName("授权类型");
         m2.setCode("sys_grant_type");
         m2.setId(2L);
@@ -170,7 +170,7 @@ public class ToolDictInitService {
         d205.setShsty("default");
         list2.add(d205);
 
-        ToolDictMainEntity m3 = new ToolDictMainEntity();
+        ToolDictEntity m3 = new ToolDictEntity();
         m3.setName("设备类型");
         m3.setCode("sys_device_type");
         m3.setId(3L);
@@ -220,9 +220,9 @@ public class ToolDictInitService {
 
     private final ToolDictDataRepo dataRepo;
 
-    private final ToolDictMainRepo mainRepo;
+    private final ToolDictRepo mainRepo;
 
-    private void insert(List<ToolDictMainEntity> list1,List<ToolDictDataEntity> list2) {
+    private void insert(List<ToolDictEntity> list1, List<ToolDictDataEntity> list2) {
         for (ToolDictDataEntity data : list2) {
             data.setCrtim(new Date());
             data.setUptim(data.getCrtim());

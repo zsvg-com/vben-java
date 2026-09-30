@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * 关联分类表案例
  */
 @RestController
-@RequestMapping("demo/link/cate")
+@RequestMapping("demo/linkc")
 @RequiredArgsConstructor
 public class DemoLinkCateController {
 
@@ -31,7 +31,7 @@ public class DemoLinkCateController {
      * @return 案例树状数据
      */
     @GetMapping("tree")
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demo:linkc:query")
     public R<List<Ltree>> getTree(String name, Long id) {
         Sqler sqler = new Sqler(table);
         List<Ltree> list = service.findTreeList(sqler, name, id);
@@ -44,7 +44,7 @@ public class DemoLinkCateController {
      * @return 案例列表数据
      */
     @GetMapping("list")
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demo:linkc:query")
     public R<List<DemoLinkCate>> getList(String name) {
         Sqler sqler = new Sqler(table);
         sqler.addLike("t.name", name);
@@ -59,7 +59,7 @@ public class DemoLinkCateController {
      * @return 案例对象
      */
     @GetMapping("info/{id}")
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demo:linkc:query")
     public R<DemoLinkCate> info(@PathVariable Long id) {
         DemoLinkCate cate = service.select(id);
         return R.ok(cate);
@@ -71,7 +71,7 @@ public class DemoLinkCateController {
      * @return 案例ID
      */
     @PostMapping
-    @SaCheckPermission("link:cate:add")
+    @SaCheckPermission("demo:linkc:add")
     @Log(title = "综合树表案例", businessType = BusinessType.INSERT)
     @RepeatSubmit(interval = 2, timeUnit = TimeUnit.SECONDS, message = "{repeat.submit.message}")
     public R<Long> post(@RequestBody DemoLinkCate cate) {
@@ -85,7 +85,7 @@ public class DemoLinkCateController {
      */
     @PutMapping
     @RepeatSubmit
-    @SaCheckPermission("link:cate:edit")
+    @SaCheckPermission("demo:linkc:edit")
     @Log(title = "关联分类表案例", businessType = BusinessType.UPDATE)
     public R<Long> put(@RequestBody DemoLinkCate cate) {
         return R.ok(null, service.update(cate, table));
@@ -97,7 +97,7 @@ public class DemoLinkCateController {
      * @return 删除的案例数量
      */
     @DeleteMapping("{ids}")
-    @SaCheckPermission("link:cate:remove")
+    @SaCheckPermission("demo:linkc:delete")
     @Log(title = "关联分类表案例", businessType = BusinessType.DELETE)
     public R<Integer> delete(@PathVariable Long[] ids) {
         return R.ok(service.delete(ids));
@@ -108,7 +108,7 @@ public class DemoLinkCateController {
      * @param bo 移动对象
      */
     @PostMapping("move")
-    @SaCheckPermission("link:cate:edit")
+    @SaCheckPermission("demo:linkc:edit")
     @Log(title = "关联分类表案例", businessType = BusinessType.OTHER)
     public R<Void> move(@RequestBody Lmove bo) {
         service.move(bo, table);

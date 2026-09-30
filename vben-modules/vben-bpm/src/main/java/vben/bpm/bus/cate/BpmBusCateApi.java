@@ -12,7 +12,7 @@ import java.util.List;
  * 流程分类管理
  */
 @RestController
-@RequestMapping("bpm/bus/cate")
+@RequestMapping("bpm/busc")
 @RequiredArgsConstructor
 public class BpmBusCateApi {
 

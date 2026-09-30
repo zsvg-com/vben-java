@@ -25,8 +25,8 @@ public class SysApiDao {
         return jdbcHelper.findPageData(sqler);
     }
 
-    public Set<String> findSetByOids(String oids) {
-        String sql = "select distinct perm id from sys_api a inner join sys_role_api ra on ra.aid=a.id inner join sys_role_org ro on ro.rid=ra.rid  where a.avtag="+Db.True+" and ro.oid in ("+oids+")";
+    public Set<String> findSetByAids(String aids) {
+        String sql = "select distinct perm id from sys_api a inner join sys_role_api ra on ra.aid=a.id inner join sys_role_actor ra2 on ra2.rid=ra.rid  where a.avtag="+Db.True+" and ra2.aid in ("+aids+")";
         List<String> stringList = jdbcHelper.findSlist(sql);
         return new HashSet<>(stringList);
     }

@@ -3,8 +3,8 @@ package vben.base.sys.post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.Org;
-import vben.base.sys.org.OrgDao;
+import vben.base.sys.actor.Actor;
+import vben.base.sys.actor.ActorDao;
 import vben.common.core.utils.IdUtils;
 import vben.common.jdbc.dto.PageData;
 import vben.common.jdbc.sqler.JdbcHelper;
@@ -27,27 +27,27 @@ public class SysPostService {
             main.setId("p"+IdUtils.getSnowflakeNextIdStr());
         }
         main.setCruid(LoginHelper.getUserId());
-        String tier = jdbcHelper.findString("select tier from sys_dept where id=?", main.getDepid());
+        String tier = jdbcHelper.findString("select tier from sys_org where id=?", main.getOrgid());
         main.setTier(tier + main.getId() + "_");
-        Org org = new Org(main.getId(), main.getName(),4);
-        orgDao.insert(org);
+        Actor org = new Actor(main.getId(), main.getName(),4);
+        actorDao.insert(org);
         postDao.insert(main);
     }
 
     public void update(SysPost main) {
         main.setUptim(new Date());
         main.setUpuid(LoginHelper.getUserId());
-        String tier = jdbcHelper.findString("select tier from sys_dept where id=?", main.getDepid());
+        String tier = jdbcHelper.findString("select tier from sys_org where id=?", main.getOrgid());
         main.setTier(tier  +main.getId() + "_");
-        Org org = new Org(main.getId(), main.getName(),4);
+        Actor org = new Actor(main.getId(), main.getName(),4);
         postDao.update(main);
-        orgDao.update(org);
+        actorDao.update(org);
     }
 
     public int delete(String[] ids) {
         for (String id : ids) {
             postDao.deleteById(id);
-            orgDao.deleteById(id);
+            actorDao.deleteById(id);
         }
         return ids.length;
     }
@@ -61,6 +61,6 @@ public class SysPostService {
 
     private final SysPostDao postDao;
 
-    private final OrgDao orgDao;
+    private final ActorDao actorDao;
 
 }

@@ -70,10 +70,10 @@ public class MonOperLogEntity {
     private String opuna;
 
     /**
-     * 部门名称
+     * 组织名称
      */
     @Column(length = 64)
-    @Schema(description = "操作人员")
+    @Schema(description = "组织名称")
     private String opdna;
 
     /**

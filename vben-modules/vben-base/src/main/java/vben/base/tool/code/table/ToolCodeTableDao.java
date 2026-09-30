@@ -32,7 +32,7 @@ public class ToolCodeTableDao {
         List<ToolCodeField> list = jdbcHelper.getTp().query(roleSql, new BeanPropertyRowMapper<>(ToolCodeField.class),id);
         table.setFields(list);
 
-        String cusql = "select name from sys_org where id = ?";
+        String cusql = "select name from sys_actor where id = ?";
         if(table.getCruid()!=null){
             table.setCruna(jdbcHelper.findString(cusql, table.getCruid()));
         }

@@ -18,19 +18,19 @@ public class SysReceDao {
         for (SysRece rece : list) {
             Object[] arr = new Object[2];
             arr[0] = rece.getUseid();
-            arr[1] = rece.getOid();
+            arr[1] = rece.getAid();
             deleteList.add(arr);
 
             Object[] arr2 = new Object[4];
             arr2[0] = rece.getId();
             arr2[1] = rece.getUseid();
-            arr2[2] = rece.getOid();
+            arr2[2] = rece.getAid();
             arr2[3] = rece.getUptim();
             insertLIst.add(arr2);
         }
-        String deleteSql = "delete from sys_rece where useid=? and oid=?";
+        String deleteSql = "delete from sys_rece where useid=? and aid=?";
         jdbcHelper.batch(deleteSql, deleteList);
-        String insertSql = "insert into sys_rece(id,useid,oid,uptim) values(?,?,?,?)";
+        String insertSql = "insert into sys_rece(id,useid,aid,uptim) values(?,?,?,?)";
         jdbcHelper.batch(insertSql, insertLIst);
     }
 
@@ -39,7 +39,7 @@ public class SysReceDao {
         Isqler sqler = new Isqler("sys_rece");
         sqler.add("id", rece.getId());
         sqler.add("name", rece.getUseid());
-        sqler.add("depid", rece.getOid());
+        sqler.add("aid", rece.getAid());
         sqler.add("tier", rece.getUptim());
         jdbcHelper.getTp().update(sqler.getSql(), sqler.getParams());
     }

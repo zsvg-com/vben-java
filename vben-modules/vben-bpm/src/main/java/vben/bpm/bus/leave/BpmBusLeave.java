@@ -1,7 +1,7 @@
 package vben.bpm.bus.leave;
 
 import lombok.Data;
-import vben.bpm.bus.main.BpmBusMain;
+import vben.bpm.bus.main.BpmBus;
 
 import java.util.Date;
 
@@ -86,6 +86,6 @@ public class BpmBusLeave {
     /**
      * 流程对象
      */
-    private BpmBusMain flowBo;
+    private BpmBus flowBo;
 
 }

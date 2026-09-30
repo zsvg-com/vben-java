@@ -6,7 +6,7 @@ import vben.common.jdbc.sqler.JdbcHelper;
 import vben.common.jdbc.sqler.Usqler;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Component;
-import vben.base.sys.org.Org;
+import vben.base.sys.actor.Actor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ public class SysGroupDao {
     public SysGroup findById(String id) {
         String sql = "select * from sys_group where id = ?";
         SysGroup group = jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(SysGroup.class), id);
-        String sql2 = "select t.id,t.name from sys_org t inner join sys_group_org o on o.oid=t.id where o.gid = ?";
-        List<Org> users = jdbcHelper.getTp().query(sql2, new BeanPropertyRowMapper<>(Org.class), id);
+        String sql2 = "select t.id,t.name from sys_actor t inner join sys_group_actor a on a.aid=t.id where a.gid = ?";
+        List<Actor> users = jdbcHelper.getTp().query(sql2, new BeanPropertyRowMapper<>(Actor.class), id);
         group.setMembers(users);
         return group;
     }
@@ -41,13 +41,13 @@ public class SysGroupDao {
         jdbcHelper.getTp().update(sqler.getSql(), sqler.getParams());
 
         List<Object[]> insertMemberList = new ArrayList<>();
-        for (Org org : group.getMembers()) {
+        for (Actor org : group.getMembers()) {
             Object[] arr=new Object[2];
             arr[0]=group.getId();
             arr[1]=org.getId();
             insertMemberList.add(arr);
         }
-        String insertMemberSql="insert into sys_group_org(gid,oid) values(?,?)";
+        String insertMemberSql="insert into sys_group_actor(gid,aid) values(?,?)";
         jdbcHelper.batch(insertMemberSql, insertMemberList);
     }
 
@@ -64,15 +64,15 @@ public class SysGroupDao {
         usqler.add("catid", group.getCatid());
         jdbcHelper.getTp().update(usqler.getSql(), usqler.getParams());
 
-        jdbcHelper.update("delete from sys_group_org where gid = ?", group.getId());
+        jdbcHelper.update("delete from sys_group_actor where gid = ?", group.getId());
         List<Object[]> insertMemberList = new ArrayList<>();
-        for (Org org : group.getMembers()) {
+        for (Actor org : group.getMembers()) {
             Object[] arr=new Object[2];
             arr[0]=group.getId();
             arr[1]=org.getId();
             insertMemberList.add(arr);
         }
-        String insertMemberSql="insert into sys_group_org(gid,oid) values(?,?)";
+        String insertMemberSql="insert into sys_group_actor(gid,aid) values(?,?)";
         jdbcHelper.batch(insertMemberSql, insertMemberList);
     }
 
@@ -80,7 +80,7 @@ public class SysGroupDao {
         String sql = "delete from sys_group where id=?";
         jdbcHelper.getTp().update(sql, id);
 
-        String sql2 = "delete from sys_group_org where gid=?";
+        String sql2 = "delete from sys_group_actor where gid=?";
         jdbcHelper.getTp().update(sql2, id);
     }
 

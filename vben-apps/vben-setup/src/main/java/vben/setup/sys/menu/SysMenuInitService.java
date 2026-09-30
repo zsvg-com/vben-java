@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 部门初始化
+ * 菜单初始化
  */
 @Service
 @RequiredArgsConstructor
@@ -30,11 +30,11 @@ public class SysMenuInitService {
 
         SysMenuEntity m1010 = new SysMenuEntity();
         m1010.setId(1010L);
-        m1010.setComp("sys/dept/index");
+        m1010.setComp("sys/org/index");
         m1010.setIcon("mingcute:department-line");
-        m1010.setName("部门管理");
+        m1010.setName("组织管理");
         m1010.setOrnum(1010);
-        m1010.setPath("dept");
+        m1010.setPath("org");
         m1010.setPid(1000L);
         list.add(m1010);
 
@@ -169,7 +169,7 @@ public class SysMenuInitService {
         m2010.setIcon("oui:online");
         m2010.setName("在线用户");
         m2010.setOrnum(2010);
-        m2010.setPath("online/user");
+        m2010.setPath("online");
         m2010.setPid(2000L);
         list.add(m2010);
 
@@ -179,7 +179,7 @@ public class SysMenuInitService {
         m2020.setIcon("uiw:login");
         m2020.setName("登录日志");
         m2020.setOrnum(2020);
-        m2020.setPath("login/log");
+        m2020.setPath("login");
         m2020.setPid(2000L);
         list.add(m2020);
 
@@ -189,7 +189,7 @@ public class SysMenuInitService {
         m2030.setIcon("icon-park-outline:reverse-operation-in");
         m2030.setName("操作日志");
         m2030.setOrnum(2030);
-        m2030.setPath("oper/log");
+        m2030.setPath("oper");
         m2030.setPid(2000L);
         list.add(m2030);
 
@@ -219,7 +219,7 @@ public class SysMenuInitService {
         m2060.setIcon("streamline:task-list");
         m2060.setName("定时任务");
         m2060.setOrnum(2060);
-        m2060.setPath("job/main");
+        m2060.setPath("job");
         m2060.setPid(2000L);
         list.add(m2060);
 
@@ -229,7 +229,7 @@ public class SysMenuInitService {
         m2061.setIcon("ix:log");
         m2061.setName("任务日志");
         m2061.setOrnum(2061);
-        m2061.setPath("job/log");
+        m2061.setPath("jobl");
         m2061.setPid(2000L);
         m2061.setShtag(false);
         list.add(m2061);
@@ -340,7 +340,7 @@ public class SysMenuInitService {
         m6010.setIcon("tabler:category-plus");
         m6010.setName("流程分类");
         m6010.setOrnum(6010);
-        m6010.setPath("bus/cate");
+        m6010.setPath("busc");
         m6010.setPid(6000L);
         list.add(m6010);
 
@@ -350,7 +350,7 @@ public class SysMenuInitService {
         m6020.setIcon("carbon:prompt-template");
         m6020.setName("流程模板");
         m6020.setOrnum(6020);
-        m6020.setPath("bus/tmpl");
+        m6020.setPath("bust");
         m6020.setPid(6000L);
         list.add(m6020);
 
@@ -360,7 +360,7 @@ public class SysMenuInitService {
         m6021.setIcon("carbon:prompt-template");
         m6021.setName("流程模板编辑");
         m6021.setOrnum(6021);
-        m6021.setPath("bus/tmpl/edit");
+        m6021.setPath("bust/edit");
         m6021.setCatag(true);
         m6021.setShtag(false);
         m6021.setPid(6000L);
@@ -372,7 +372,7 @@ public class SysMenuInitService {
         m6030.setIcon("ri:instance-line");
         m6030.setName("流程清单");
         m6030.setOrnum(6030);
-        m6030.setPath("bus/main");
+        m6030.setPath("bus");
         m6030.setPid(6000L);
         list.add(m6030);
 
@@ -382,7 +382,7 @@ public class SysMenuInitService {
         m6031.setIcon("ri:instance-line");
         m6031.setName("流程编辑");
         m6031.setOrnum(6031);
-        m6031.setPath("bus/main/edit");
+        m6031.setPath("bus/edit");
         m6031.setCatag(true);
         m6031.setShtag(false);
         m6031.setPid(6000L);
@@ -394,7 +394,7 @@ public class SysMenuInitService {
         m6032.setIcon("ri:instance-line");
         m6032.setName("流程查看");
         m6032.setOrnum(6032);
-        m6032.setPath("bus/main/view");
+        m6032.setPath("bus/view");
         m6032.setCatag(true);
         m6032.setShtag(false);
         m6032.setPid(6000L);
@@ -412,21 +412,21 @@ public class SysMenuInitService {
 
         SysMenuEntity m6050 = new SysMenuEntity();
         m6050.setId(6050L);
-        m6050.setComp("bpm/org/tree/index");
+        m6050.setComp("bpm/role/tree/index");
         m6050.setIcon("mdi:workflow-outline");
-        m6050.setName("流程组织");
+        m6050.setName("流程角色");
         m6050.setOrnum(6050);
-        m6050.setPath("org/tree");
+        m6050.setPath("role");
         m6050.setPid(6000L);
         list.add(m6050);
 
         SysMenuEntity m6051 = new SysMenuEntity();
         m6051.setId(6051L);
-        m6051.setComp("bpm/org/node/index");
+        m6051.setComp("bpm/role/node/index");
         m6051.setIcon("mdi:workflow-outline");
-        m6051.setName("流程组织节点");
+        m6051.setName("流程角色节点");
         m6051.setOrnum(6051);
-        m6051.setPath("org/node");
+        m6051.setPath("role/node");
         m6051.setShtag(false);
         m6051.setPid(6000L);
         list.add(m6051);

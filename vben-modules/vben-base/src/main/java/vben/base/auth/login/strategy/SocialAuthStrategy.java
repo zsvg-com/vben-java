@@ -8,9 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Service;
+import vben.base.auth.login.AuthLoginService;
+import vben.base.auth.login.vo.LoginVo;
+import vben.base.auth.login.vo.SysClientVo;
+import vben.base.pub.user.User;
+import vben.base.sys.social.ISysSocialService;
+import vben.base.sys.social.SysSocialVo;
 import vben.base.sys.user.SysUser;
 import vben.base.sys.user.SysUserDao;
-import vben.common.core.constant.SystemConstants;
 import vben.common.core.domain.model.LoginUser;
 import vben.common.core.domain.model.SocialLoginBody;
 import vben.common.core.exception.ServiceException;
@@ -22,12 +27,6 @@ import vben.common.json.utils.JsonUtils;
 import vben.common.satoken.utils.LoginHelper;
 import vben.common.social.config.properties.SocialProperties;
 import vben.common.social.utils.SocialUtils;
-import vben.base.sys.social.ISysSocialService;
-import vben.base.sys.social.SysSocialVo;
-import vben.base.auth.login.vo.LoginVo;
-import vben.base.auth.login.vo.SysClientVo;
-import vben.base.auth.user.AuthUserVo;
-import vben.base.auth.login.AuthLoginService;
 
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +84,7 @@ public class SocialAuthStrategy implements IAuthStrategy {
 //            return loginService.buildLoginUser(user);
 //        });
 
-        AuthUserVo user = loadUser(social.getUserId());
+        User user = loadUser(social.getUserId());
         // 此处可根据登录用户的数据不同 自行创建 loginUser 属性不够用继承扩展就行了
         LoginUser loginUser = loginService.buildLoginUser(user);
 
@@ -108,21 +107,21 @@ public class SocialAuthStrategy implements IAuthStrategy {
         return loginVo;
     }
 
-    private AuthUserVo loadUser(String userId) {
+    private User loadUser(String userId) {
         SysUser orgUser = userDao.findById(userId);
-        AuthUserVo user=new AuthUserVo();
-        user.setUserName(orgUser.getUsername());
-        user.setUserId(orgUser.getId());
-        user.setPassword(orgUser.getPassword());
-        user.setNickName(orgUser.getName());
-        user.setDeptId(orgUser.getDepid());
-        user.setDeptName(orgUser.getDepna());
-        user.setUserType("sys_user");
+        User user=new User();
+        user.setUsena(orgUser.getUsername());
+        user.setUseid(orgUser.getId());
+        user.setPwd(orgUser.getPassword());
+        user.setNicna(orgUser.getName());
+        user.setOrgid(orgUser.getOrgid());
+        user.setOrgna(orgUser.getOrgna());
+        user.setUsety("sys_user");
 
         if (ObjectUtils.isNull(user)) {
             log.info("登录用户：{} 不存在.", "");
             throw new UserException("user.not.exists", "");
-        } else if (SystemConstants.DISABLE.equals(user.getStatus())) {
+        } else if (!user.getAvtag()) {
             log.info("登录用户：{} 已被停用.", "");
             throw new UserException("user.blocked", "");
         }

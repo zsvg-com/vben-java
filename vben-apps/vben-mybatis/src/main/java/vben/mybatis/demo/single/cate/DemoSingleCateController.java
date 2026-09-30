@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("demo/single/cate")
+@RequestMapping("demo/singlec")
 public class DemoSingleCateController {
 
     private final DemoSingleCateService service;
@@ -43,7 +43,7 @@ public class DemoSingleCateController {
      * @param id 排除的ID
      * @return XX树状数据
      */
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     @GetMapping("tree")
     public R<List<Ltree>> getTree(String name, Long id) {
         Sqler sqler = new Sqler(table);
@@ -56,7 +56,7 @@ public class DemoSingleCateController {
      * @param name XX名称
      * @return XX列表数据
      */
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     @GetMapping("list")
     public R<List<DemoSingleCate>> getList(String name) {
         Sqler sqler = new Sqler(table);
@@ -71,7 +71,7 @@ public class DemoSingleCateController {
      * @param name XX名称
      * @return XX分页数据
      */
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     @GetMapping
     public R<PageData> get(String name) {
         Sqler sqler = new Sqler("demo_single_main");
@@ -86,7 +86,7 @@ public class DemoSingleCateController {
      * @param id ID
      * @return XX对象
      */
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     @GetMapping("info/{id}")
     public R<DemoSingleCate> info(@PathVariable("id") Long id) {
         return R.ok(service.select(id));
@@ -97,7 +97,7 @@ public class DemoSingleCateController {
      * @param cate XX对象
      * @return ID
      */
-    @SaCheckPermission("single:cate:add")
+    @SaCheckPermission("demo:singlec:add")
     @Log(title = "单一树表", businessType = BusinessType.INSERT)
     @RepeatSubmit(interval = 2, timeUnit = TimeUnit.SECONDS, message = "{repeat.submit.message}")
     @PostMapping
@@ -111,7 +111,7 @@ public class DemoSingleCateController {
      * @param cate XX对象
      * @return ID
      */
-    @SaCheckPermission("single:cate:edit")
+    @SaCheckPermission("demo:singlec:edit")
     @Log(title = "单一树表", businessType = BusinessType.UPDATE)
     @RepeatSubmit
     @PutMapping
@@ -124,7 +124,7 @@ public class DemoSingleCateController {
      * @param ids ID串
      * @return 删除的XX数量
      */
-    @SaCheckPermission("single:cate:remove")
+    @SaCheckPermission("demo:singlec:delete")
     @Log(title = "单一树表", businessType = BusinessType.DELETE)
     @DeleteMapping("{ids}")
     public R<Integer> delete(@PathVariable Long[] ids) {

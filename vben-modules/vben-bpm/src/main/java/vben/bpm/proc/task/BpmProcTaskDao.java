@@ -31,9 +31,9 @@ public class BpmProcTaskDao {
 
     public List<BpmTaskDto> findCurrentExmenByProid(Long proid){
         String sql="""
-         select t.id,t.exuid,t.nodid,o.name exuna,t.type,n.facno nodno,n.facna nodna
+         select t.id,t.exuid,t.nodid,a.name exuna,t.type,n.facno nodno,n.facna nodna
          from bpm_proc_task t
-         inner join sys_org o on o.id=t.exuid
+         inner join sys_actor a on a.id=t.exuid
          inner join bpm_proc_node n on n.id=t.nodid
          """;
         sql+="where t.proid=? and t.actag="+ Db.True+" order by t.ornum";
@@ -43,8 +43,8 @@ public class BpmProcTaskDao {
 
     public List<BpmCcInfoVo> findCanCancelCommunitMen(String proid){
         String sql="""
-            select o.id,o.name,t.id tasid from bpm_proc_task t
-            inner join sys_org o on o.id=t.exuid
+            select a.id,a.name,t.id tasid from bpm_proc_task t
+            inner join sys_actor a on a.id=t.exuid
             where t.proid=? and t.type='communicate'
             order by t.sttim
             """;

@@ -3,18 +3,18 @@ package vben.setup.sys.post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import vben.common.jpa.entity.SysOrg;
+import vben.common.jpa.entity.SysActor;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 组织架构岗位
+ * 系统岗位
  */
 @Data
 @Entity
 @Table(name = "sys_post")
-@Schema(description = "组织架构-岗位")
+@Schema(description = "系统岗位")
 public class SysPostEntity {
 
     /**
@@ -33,11 +33,11 @@ public class SysPostEntity {
     private String name;
 
     /**
-     * 部门ID
+     * 组织ID
      */
     @Column(length = 36)
-    @Schema(description = "部门ID")
-    private String depid;
+    @Schema(description = "组织ID")
+    private String orgid;
 
     /**
      * 层级，以“_”隔开
@@ -101,9 +101,9 @@ public class SysPostEntity {
      * 包含成员
      */
     @ManyToMany
-    @JoinTable(name = "sys_post_org", joinColumns = {@JoinColumn(name = "pid")},
-        inverseJoinColumns = {@JoinColumn(name = "oid")})
+    @JoinTable(name = "sys_post_actor", joinColumns = {@JoinColumn(name = "pid")},
+        inverseJoinColumns = {@JoinColumn(name = "aid")})
     @Schema(description = "员工列表")
-    private List<SysOrg> users;
+    private List<SysActor> users;
 
 }

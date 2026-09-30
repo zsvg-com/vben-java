@@ -3,18 +3,18 @@ package vben.setup.sys.group;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import vben.common.jpa.entity.SysOrg;
+import vben.common.jpa.entity.SysActor;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 组织架构群组
+ * 系统群组
  */
 @Data
 @Entity
 @Table(name = "sys_group")
-@Schema(description = "组织架构-群组")
+@Schema(description = "系统群组")
 public class SysGroupEntity {
 
     /**
@@ -94,9 +94,9 @@ public class SysGroupEntity {
      * 成员列表
      */
     @ManyToMany
-    @JoinTable(name = "sys_group_org", joinColumns = {@JoinColumn(name = "gid")},
-        inverseJoinColumns = {@JoinColumn(name = "oid")})
+    @JoinTable(name = "sys_group_actor", joinColumns = {@JoinColumn(name = "gid")},
+        inverseJoinColumns = {@JoinColumn(name = "aid")})
     @Schema(description = "成员信息")
-    private List<SysOrg> members;
+    private List<SysActor> members;
 
 }

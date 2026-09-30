@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import vben.base.sys.user.SysUserDao;
+import vben.base.pub.user.User;
 import vben.base.sys.api.SysApiDao;
+import vben.base.sys.role.SysRoleDao;
+import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.CacheConstants;
 import vben.common.core.constant.Constants;
 import vben.common.core.domain.model.LoginUser;
@@ -20,7 +22,6 @@ import vben.common.core.utils.SpringUtils;
 import vben.common.log.event.LogininforEvent;
 import vben.common.redis.utils.RedisUtils;
 import vben.common.satoken.utils.LoginHelper;
-import vben.base.auth.user.AuthUserVo;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -47,6 +48,8 @@ public class AuthLoginService {
 
     private final SysUserDao userDao;
 
+    private final SysRoleDao roleDao;
+
 
     /**
      * 退出登录
@@ -69,27 +72,32 @@ public class AuthLoginService {
     /**
      * 构建登录用户
      */
-    public LoginUser buildLoginUser(AuthUserVo user) {
+    public LoginUser buildLoginUser(User user) {
         LoginUser loginUser = new LoginUser();
-        String userId = user.getUserId();
-        loginUser.setTenantId(user.getTenantId());
-        loginUser.setUserId(user.getUserId());
-        loginUser.setDeptId(user.getDeptId());
-        loginUser.setUsername(user.getUserName());
-        loginUser.setNickname(user.getNickName());
-        loginUser.setUserType(user.getUserType());
+        String userId = user.getUseid();
+        loginUser.setTenantId(user.getTenid());
+        loginUser.setUserId(user.getUseid());
+        loginUser.setOrgid(user.getOrgid());
+        loginUser.setOrgna(user.getOrgna());
+        loginUser.setUsername(user.getUsena());
+        loginUser.setNickname(user.getNicna());
+        loginUser.setUserType(user.getUsety());
 
-        String oids = RedisUtils.getCacheObject("oids:" + userId);
-        if(oids == null){
-            oids = userDao.findOrgs(userId+"");
-            RedisUtils.setCacheObject("oids:" + userId, oids);
+        //设置用户所关联的所有组织架构元素ID
+        String aids = RedisUtils.getCacheObject("aids:" + userId);
+        if(aids == null){
+            aids = userDao.findAids(userId+"");
+            RedisUtils.setCacheObject("aids:" + userId, aids);
         }
+
         if("u1".equals(userId)){
             loginUser.setMenuPermission(new HashSet<>(Arrays.asList("*:*:*")));
             loginUser.setRolePermission(new HashSet<>(Arrays.asList("superadmin")));
+            loginUser.setDataScope(1);
         }else{
-            loginUser.setMenuPermission(apiDao.findSetByOids(oids));
-            loginUser.setRolePermission(new HashSet<>());
+            loginUser.setMenuPermission(apiDao.findSetByAids(aids));
+            loginUser.setRolePermission(roleDao.findSetByAids(aids));
+            loginUser.setDataScope(roleDao.findDataScope(aids));
         }
         return loginUser;
     }

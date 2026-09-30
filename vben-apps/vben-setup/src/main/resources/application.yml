@@ -209,8 +209,7 @@ xss:
   # 排除链接
   excludeUrls:
     - /system/notice
-    - /oa/flow/tmpl
-    - /bpm/bus/tmpl
+    - /bpm/bust
 
 --- # 分布式锁 lock4j 全局配置
 lock4j:

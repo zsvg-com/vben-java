@@ -20,14 +20,14 @@ public class SysReceService {
     //todo 有时间再优化
     public int update(List<SysRece> reces, String userId) {
         for (SysRece rece : reces) {
-            rece.setOid(rece.getId());
+            rece.setAid(rece.getId());
             rece.setId(IdUtils.getSnowflakeNextIdStr());
             rece.setUseid(userId);
         }
 
         //1.如果当前数量小于10，则去数据库查询最新的差额记录数
         if (reces.size() < 10) {
-            Sqler sqler = new Sqler("t.id,t.useid,t.oid,t.uptim", "sys_rece", 1, 10 - reces.size());
+            Sqler sqler = new Sqler("t.id,t.useid,t.aid,t.uptim", "sys_rece", 1, 10 - reces.size());
             sqler.addDescOrder("t.uptim");
             sqler.addEqual("t.useid", userId);
             List<SysRece> list;
@@ -45,7 +45,7 @@ public class SysReceService {
             for (SysRece dbRece : list) {
                 boolean flag = false;
                 for (SysRece rece : reces) {
-                    if (dbRece.getOid().equals(rece.getOid())) {
+                    if (dbRece.getAid().equals(rece.getAid())) {
                         flag = true;
                     }
                 }

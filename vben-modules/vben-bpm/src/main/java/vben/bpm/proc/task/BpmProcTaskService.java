@@ -120,9 +120,9 @@ public class BpmProcTaskService {
         }
         if (!"(".equals(ids)) {
             ids = ids.substring(0, ids.length() - 1) + ")";
-            Sqler sqler = new Sqler("n.id as tasid,t.id as nodid,o.name exnam,n.exuid,t.proid,t.facno,t.facna", "bpm_proc_node");
+            Sqler sqler = new Sqler("n.id as tasid,t.id as nodid,a.name exnam,n.exuid,t.proid,t.facno,t.facna", "bpm_proc_node");
             sqler.addInnerJoin("", "bpm_proc_task n", "n.nodid=t.id");
-            sqler.addInnerJoin("", "sys_org o", "o.id=n.exuid");
+            sqler.addInnerJoin("", "sys_actor a", "a.id=n.exuid");
             sqler.addWhere("t.proid in " + ids + " and n.actag="+ Db.True);
             sqler.addOrder("t.proid");
             sqler.addOrder("n.ornum");

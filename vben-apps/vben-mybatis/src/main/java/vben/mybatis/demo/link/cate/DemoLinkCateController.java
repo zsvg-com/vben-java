@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("demo/link/cate")
+@RequestMapping("demo/linkc")
 public class DemoLinkCateController {
 
     private final DemoLinkCateService service;
@@ -38,7 +38,7 @@ public class DemoLinkCateController {
      * @param id 排除的案例ID
      * @return 案例树状数据
      */
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demp:linkc:query")
     @GetMapping("tree")
     public R<List<Ltree>> getTree(String name, Long id) {
         Sqler sqler = new Sqler(table);
@@ -51,7 +51,7 @@ public class DemoLinkCateController {
      * @param name 案例名称
      * @return 案例列表数据
      */
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demp:linkc:query")
     @GetMapping("list")
     public R<List<DemoLinkCate>> getList(String name) {
         Sqler sqler = new Sqler(table);
@@ -66,7 +66,7 @@ public class DemoLinkCateController {
      * @param name 案例名称
      * @return 案例分页数据
      */
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demp:linkc:query")
     @GetMapping
     public R<PageData> get(String name) {
         Sqler sqler = new Sqler("demo_easy_main");
@@ -81,7 +81,7 @@ public class DemoLinkCateController {
      * @param id 案例ID
      * @return 案例对象
      */
-    @SaCheckPermission("link:cate:query")
+    @SaCheckPermission("demp:linkc:query")
     @GetMapping("info/{id}")
     public R<DemoLinkCate> info(@PathVariable("id") Long id) {
         return R.ok(service.select(id));
@@ -92,7 +92,7 @@ public class DemoLinkCateController {
      * @param cate 案例对象
      * @return 案例ID
      */
-    @SaCheckPermission("link:cate:add")
+    @SaCheckPermission("demp:linkc:add")
     @Log(title = "综合树表案例", businessType = BusinessType.INSERT)
     @RepeatSubmit(interval = 2, timeUnit = TimeUnit.SECONDS, message = "{repeat.submit.message}")
     @PostMapping
@@ -106,7 +106,7 @@ public class DemoLinkCateController {
      * @param cate 案例对象
      * @return 案例ID
      */
-    @SaCheckPermission("link:cate:edit")
+    @SaCheckPermission("demp:linkc:edit")
     @Log(title = "关联分类表", businessType = BusinessType.UPDATE)
     @RepeatSubmit
     @PutMapping
@@ -119,7 +119,7 @@ public class DemoLinkCateController {
      * @param ids 案例ID串
      * @return 删除的案例数量
      */
-    @SaCheckPermission("link:cate:remove")
+    @SaCheckPermission("demp:linkc:delete")
     @Log(title = "关联分类表", businessType = BusinessType.DELETE)
     @DeleteMapping("{ids}")
     public R<Integer> delete(@PathVariable Long[] ids) {

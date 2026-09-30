@@ -33,19 +33,19 @@ public class LoginUser implements Serializable {
     private String userId;
 
     /**
-     * 部门ID
+     * 组织ID
      */
-    private String deptId;
+    private String orgid;
 
     /**
-     * 部门类别编码
+     * 组织类别编码
      */
-    private String deptCategory;
+    private String orgty;
 
     /**
-     * 部门名
+     * 组织名
      */
-    private String deptName;
+    private String orgna;
 
     /**
      * 用户唯一标识
@@ -96,6 +96,11 @@ public class LoginUser implements Serializable {
      * 角色权限
      */
     private Set<String> rolePermission;
+
+    /**
+     * 数据范围
+     */
+    private Integer dataScope;
 
     /**
      * 用户名

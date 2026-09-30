@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * 部门初始化
+ * 编号工具初始化
  */
 @Service
 @RequiredArgsConstructor

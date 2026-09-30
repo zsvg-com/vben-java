@@ -1,13 +1,13 @@
 package vben.base.sys.post;
 
 import lombok.Data;
-import vben.base.sys.org.Org;
+import vben.base.sys.actor.Actor;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 组织架构岗位
+ * 系统岗位
  */
 @Data
 public class SysPost {
@@ -23,9 +23,9 @@ public class SysPost {
     private String name;
 
     /**
-     * 部门ID
+     * 组织ID
      */
-    private String depid;
+    private String orgid;
 
     /**
      * 层级，以“_”隔开
@@ -75,6 +75,6 @@ public class SysPost {
     /**
      * 包含成员
      */
-    private List<Org> users;
+    private List<Actor> users;
 
 }

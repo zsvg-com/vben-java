@@ -11,7 +11,7 @@ import java.util.List;
  * 字典分类管理
  */
 @RestController
-@RequestMapping("tool/dict/cate")
+@RequestMapping("tool/dictc")
 @RequiredArgsConstructor
 public class ToolDictCateApi {
 

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * 单一树表案例
  */
 @RestController
-@RequestMapping("demo/single/cate")
+@RequestMapping("demo/singlec")
 @RequiredArgsConstructor
 public class DemoSingleCateController {
 
@@ -30,7 +30,7 @@ public class DemoSingleCateController {
      * @return XX树状数据
      */
     @GetMapping("tree")
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     public R<List<Ltree>> getTree(String name, Long id) {
         Sqler sqler = new Sqler(table);
         List<Ltree> list = service.findTreeList(sqler, name, id);
@@ -43,7 +43,7 @@ public class DemoSingleCateController {
      * @return XX列表数据
      */
     @GetMapping("list")
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     public R<List<DemoSingleCate>> getList(String name) {
         Sqler sqler = new Sqler(table);
         sqler.addLike("t.name", name);
@@ -57,7 +57,7 @@ public class DemoSingleCateController {
      * @param id ID
      * @return XX对象
      */
-    @SaCheckPermission("single:cate:query")
+    @SaCheckPermission("demo:singlec:query")
     @GetMapping("info/{id}")
     public R<DemoSingleCate> info(@PathVariable Long id) {
         DemoSingleCate cate = service.select(id);
@@ -70,7 +70,7 @@ public class DemoSingleCateController {
      * @return ID
      */
     @PostMapping
-    @SaCheckPermission("single:cate:add")
+    @SaCheckPermission("demo:singlec:add")
     @Log(title = "单一树表案例", businessType = BusinessType.INSERT)
     @RepeatSubmit(interval = 2, timeUnit = TimeUnit.SECONDS, message = "{repeat.submit.message}")
     public R<Long> post(@RequestBody DemoSingleCate cate) {
@@ -84,7 +84,7 @@ public class DemoSingleCateController {
      */
     @PutMapping
     @RepeatSubmit
-    @SaCheckPermission("single:cate:edit")
+    @SaCheckPermission("demo:singlec:edit")
     @Log(title = "单一树表案例", businessType = BusinessType.UPDATE)
     public R<Long> put(@RequestBody DemoSingleCate cate) {
         return R.ok(null, service.update(cate, table));
@@ -97,7 +97,7 @@ public class DemoSingleCateController {
      */
     @DeleteMapping("{ids}")
     @RepeatSubmit
-    @SaCheckPermission("single:cate:delete")
+    @SaCheckPermission("demo:singlec:delete")
     @Log(title = "单一树表案例", businessType = BusinessType.DELETE)
     public R<Integer> delete(@PathVariable Long[] ids) {
         return R.ok(service.delete(ids));

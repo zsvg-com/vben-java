@@ -22,20 +22,20 @@ public class SysPostApi {
 
     /**
      * 岗位分页查询
-     * @param depid 部门ID
+     * @param orgid 组织ID
      * @param name 岗位名称
      * @return 岗位分页数据
      */
     @SaCheckPermission("sys:post:query")
     @GetMapping
-    public R<PageData> get(String depid, String name) {
+    public R<PageData> get(String orgid, String name) {
         Sqler sqler = new Sqler("sys_post");
         if (StrUtils.isNotBlank(name)) {
             sqler.addLike("t.name", name);
-        } else if (depid!=null) {
-            sqler.addEqual("t.depid", depid);
+        } else if (orgid!=null) {
+            sqler.addEqual("t.orgid", orgid);
         }
-        sqler.addInnerJoin("d.name depna","sys_dept d","d.id=t.depid");
+        sqler.addInnerJoin("o.name orgna","sys_org o","o.id=t.orgid");
         sqler.addSelect("t.crtim,t.uptim,t.notes,t.avtag");
         sqler.addOrder("t.ornum");
         return R.ok(service.findPageData(sqler));

@@ -77,11 +77,11 @@ public class SysUserEntity {
 
 
     /**
-     * 部门ID
+     * 组织ID
      */
     @Column(length = 36)
-    @Schema(description = "部门ID")
-    private String depid;
+    @Schema(description = "组织ID")
+    private String orgid;
 
     /**
      * 层级，建议不超过10级

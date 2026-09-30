@@ -13,7 +13,7 @@ import vben.common.log.enums.BusinessType;
  * 定时任务日志
  */
 @RestController
-@RequestMapping("mon/job/log")
+@RequestMapping("mon/jobl")
 @RequiredArgsConstructor
 public class MonJobLogApi {
 
@@ -24,7 +24,7 @@ public class MonJobLogApi {
      * @param name 任务名称
      * @return 日志分页数据
      */
-    @SaCheckPermission("monjob:log:query")
+    @SaCheckPermission("mon:jobl:query")
     @GetMapping
     public R<PageData> get(String name) {
         Sqler sqler = new Sqler("t.id,t.name,t.sttim,t.entim,t.ret", "mon_job_log");
@@ -38,7 +38,7 @@ public class MonJobLogApi {
      * @param id 日志ID
      * @return 日志对象
      */
-    @SaCheckPermission("monjob:log:query")
+    @SaCheckPermission("mon:jobl:query")
     @GetMapping("info/{id}")
     public R<MonJobLog> info(@PathVariable Long id) {
         return R.ok(service.findOne(id));
@@ -50,7 +50,7 @@ public class MonJobLogApi {
      * @return 日志数量
      */
     @Log(title = "定时任务日志", businessType = BusinessType.DELETE)
-    @SaCheckPermission("monjob:log:delete")
+    @SaCheckPermission("mon:jobl:delete")
     @DeleteMapping("{ids}")
     public R<Integer> delete(@PathVariable Long[] ids) {
         return R.ok(service.delete(ids));
@@ -60,7 +60,7 @@ public class MonJobLogApi {
      * 日志清空处理
      */
     @Log(title = "定时任务日志", businessType = BusinessType.DELETE)
-    @SaCheckPermission("monjob:log:delete")
+    @SaCheckPermission("mon:jobl:delete")
     @DeleteMapping("all")
     public R<Void> deleteAll() {
         service.deleteAll();

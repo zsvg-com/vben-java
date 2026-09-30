@@ -12,7 +12,7 @@ import vben.common.jdbc.sqler.JdbcHelper;
 import vben.common.jdbc.sqler.Sqler;
 import vben.common.core.utils.IdUtils;
 import vben.common.jpa.entity.BaseStrCateEntity;
-import vben.common.jpa.entity.SysOrg;
+import vben.common.jpa.entity.SysActor;
 import vben.common.satoken.utils.LoginHelper;
 
 import java.util.ArrayList;
@@ -139,8 +139,8 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
             cate.setId(IdUtils.getSnowflakeNextIdStr());
         }
         if(cate.getCrman()==null){
-            cate.setCrman(new SysOrg(LoginHelper.getUserId()));
-            cate.setUpman(new SysOrg(LoginHelper.getUserId()));
+            cate.setCrman(new SysActor(LoginHelper.getUserId()));
+            cate.setUpman(new SysActor(LoginHelper.getUserId()));
         }
         if (cate.getPid() != null) {
             T parent = repo.findById(cate.getPid()).get();
@@ -156,7 +156,7 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
     //更新
     public String update(T cate){
         cate.setUptim(new Date());
-        cate.setUpman(new SysOrg(LoginHelper.getUserId()));
+        cate.setUpman(new SysActor(LoginHelper.getUserId()));
         repo.save(cate);
         return cate.getId();
     }
@@ -165,7 +165,7 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
     public String update(T cate,String table,boolean tierChange){
         cate.setUptim(new Date());
         if(cate.getUpman()==null){
-            cate.setUpman(new SysOrg(LoginHelper.getUserId()));
+            cate.setUpman(new SysActor(LoginHelper.getUserId()));
         }
         String newPid = "";
         if(cate.getPid()!=null){
@@ -273,14 +273,14 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
     }
 
     public void move(Smove bo, String table) throws Exception {
-        T dragDept= repo.findById(bo.getDraid()).get();
+        T dragOrg= repo.findById(bo.getDraid()).get();
         List<SidOrnum> list2;
-        if(StrUtils.isNotBlank(dragDept.getPid())){
+        if(StrUtils.isNotBlank(dragOrg.getPid())){
             String sql = "select id,ornum from "+table+" where ornum>? and pid=?";
-            list2 = jdbcHelper.getTp().query(sql,new BeanPropertyRowMapper<>(SidOrnum.class),dragDept.getOrnum(),dragDept.getPid());
+            list2 = jdbcHelper.getTp().query(sql,new BeanPropertyRowMapper<>(SidOrnum.class),dragOrg.getOrnum(),dragOrg.getPid());
         }else{
             String sql = "select id,ornum from "+table+" where ornum>? and pid is null";
-            list2 = jdbcHelper.getTp().query(sql,new BeanPropertyRowMapper<>(SidOrnum.class),dragDept.getOrnum());
+            list2 = jdbcHelper.getTp().query(sql,new BeanPropertyRowMapper<>(SidOrnum.class),dragOrg.getOrnum());
         }
 
         String updateSql = "update "+table+" set ornum=? where id=?";
@@ -296,37 +296,37 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
         boolean tierChange=true;
         if ("inner".equals(bo.getType()))
         {
-            if(bo.getDroid().equals(dragDept.getPid())){
+            if(bo.getDroid().equals(dragOrg.getPid())){
                 tierChange=false;
             }
-            dragDept.setPid(bo.getDroid());
+            dragOrg.setPid(bo.getDroid());
             Integer count=getCount(bo.getDroid(),table);
-            dragDept.setOrnum(count+1);
+            dragOrg.setOrnum(count+1);
         }
         else if ("before".equals(bo.getType()))
         {
-            T dropDept= repo.findById(bo.getDroid()).get();
-            if(dropDept.getPid()!=null){
-                if(dropDept.getPid().equals(dragDept.getPid())){
+            T dropOrg= repo.findById(bo.getDroid()).get();
+            if(dropOrg.getPid()!=null){
+                if(dropOrg.getPid().equals(dragOrg.getPid())){
                     tierChange=false;
                 }
-                dropDept.setPid(dropDept.getPid());
-                dragDept.setPid(dropDept.getPid());;
+                dropOrg.setPid(dropOrg.getPid());
+                dragOrg.setPid(dropOrg.getPid());;
             }else{
-                if(dragDept.getPid()==null){
+                if(dragOrg.getPid()==null){
                     tierChange=false;
                 }
-                dragDept.setPid(null);
+                dragOrg.setPid(null);
             }
-            dragDept.setOrnum(dropDept.getOrnum());
+            dragOrg.setOrnum(dropOrg.getOrnum());
 
             List<SidOrnum> list3;
-            if(StrUtils.isNotBlank(dropDept.getPid())){
+            if(StrUtils.isNotBlank(dropOrg.getPid())){
                 String sql3 = "select id,ornum from "+table+" where ornum>? and pid=?";
-                list3 = jdbcHelper.getTp().query(sql3,new BeanPropertyRowMapper<>(SidOrnum.class),dropDept.getOrnum(),dropDept.getPid());
+                list3 = jdbcHelper.getTp().query(sql3,new BeanPropertyRowMapper<>(SidOrnum.class),dropOrg.getOrnum(),dropOrg.getPid());
             }else{
                 String sql3 = "select id,ornum from "+table+" where ornum>? and pid is null";
-                list3 = jdbcHelper.getTp().query(sql3,new BeanPropertyRowMapper<>(SidOrnum.class),dropDept.getOrnum());
+                list3 = jdbcHelper.getTp().query(sql3,new BeanPropertyRowMapper<>(SidOrnum.class),dropOrg.getOrnum());
             }
             String updateSql3 = "update "+table+" set ornum=? where id=?";
             List<Object[]> updateList3 = new ArrayList<>();
@@ -337,35 +337,35 @@ public abstract class BaseStrCateService<T extends BaseStrCateEntity> {
                 updateList3.add(arr);
             }
             jdbcHelper.batch(updateSql3, updateList3);
-            dropDept.setOrnum(dropDept.getOrnum()+1);
+            dropOrg.setOrnum(dropOrg.getOrnum()+1);
             String updateSql4 = "update "+table+" set ornum=? where id=?";
-            jdbcHelper.update(updateSql4, dropDept.getOrnum(), dropDept.getId());
+            jdbcHelper.update(updateSql4, dropOrg.getOrnum(), dropOrg.getId());
         }
         else if ("after".equals(bo.getType()))
         {
-            T dropDept= repo.findById(bo.getDroid()).get();
-            if(dropDept.getPid()!=null){
-                if(dropDept.getPid().equals(dragDept.getPid())){
+            T dropOrg= repo.findById(bo.getDroid()).get();
+            if(dropOrg.getPid()!=null){
+                if(dropOrg.getPid().equals(dragOrg.getPid())){
                     tierChange=false;
                 }
-                dropDept.setPid(dropDept.getPid());
+                dropOrg.setPid(dropOrg.getPid());
             }else{
-                if(dragDept.getPid()==null){
+                if(dragOrg.getPid()==null){
                     tierChange=false;
                 }
             }
-            Integer count = getCount(dropDept.getPid(),table);
-            if (dragDept.getPid()!=null&&dragDept.getPid().equals(dropDept.getPid()))
+            Integer count = getCount(dropOrg.getPid(),table);
+            if (dragOrg.getPid()!=null&&dragOrg.getPid().equals(dropOrg.getPid()))
             {
-                dragDept.setOrnum(count);
+                dragOrg.setOrnum(count);
             }
             else
             {
-                dragDept.setPid(dropDept.getPid());
-                dragDept.setOrnum(count+1);
+                dragOrg.setPid(dropOrg.getPid());
+                dragOrg.setOrnum(count+1);
             }
         }
-        update(dragDept,table,tierChange);
+        update(dragOrg,table,tierChange);
     }
 
 

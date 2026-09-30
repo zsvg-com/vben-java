@@ -45,7 +45,7 @@ public abstract class BaseMainService<T extends BaseMainEntity> {
     public T select(Long id) {
         T main= mapper.selectById(id);
         //下面的可优化，从缓存读取
-        String sql = "select name from sys_org where id = ?";
+        String sql = "select name from sys_actor where id = ?";
         if(main.getCruid()!=null){
             main.setCruna(jdbcHelper.findString(sql, main.getCruid()));
         }

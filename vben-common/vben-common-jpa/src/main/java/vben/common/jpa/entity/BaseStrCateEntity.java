@@ -54,7 +54,7 @@ public class BaseStrCateEntity {
     @ManyToOne
     @JoinColumn(name = "cruid", updatable = false)
     @Schema(description = "创建人")
-    protected SysOrg crman;
+    protected SysActor crman;
 
     @Transient
     protected String cruna;
@@ -69,7 +69,7 @@ public class BaseStrCateEntity {
     @ManyToOne
     @JoinColumn(name = "upuid")
     @Schema(description = "更新人")
-    protected SysOrg upman;
+    protected SysActor upman;
 
     @Transient
     protected String upuna;

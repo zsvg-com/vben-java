@@ -6,11 +6,14 @@ import cn.hutool.crypto.digest.BCrypt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import vben.base.auth.login.AuthLoginService;
+import vben.base.auth.login.vo.LoginVo;
+import vben.base.auth.login.vo.SysClientVo;
+import vben.base.pub.user.User;
 import vben.base.sys.user.SysUser;
 import vben.base.sys.user.SysUserDao;
 import vben.common.core.constant.Constants;
 import vben.common.core.constant.GlobalConstants;
-import vben.common.core.constant.SystemConstants;
 import vben.common.core.domain.model.LoginUser;
 import vben.common.core.domain.model.PasswordLoginBody;
 import vben.common.core.enums.LoginType;
@@ -25,10 +28,6 @@ import vben.common.json.utils.JsonUtils;
 import vben.common.redis.utils.RedisUtils;
 import vben.common.satoken.utils.LoginHelper;
 import vben.common.web.config.properties.CaptchaProperties;
-import vben.base.auth.login.vo.LoginVo;
-import vben.base.auth.login.vo.SysClientVo;
-import vben.base.auth.user.AuthUserVo;
-import vben.base.auth.login.AuthLoginService;
 
 /**
  * 密码认证策略
@@ -96,15 +95,15 @@ public class PasswordAuthStrategy implements IAuthStrategy {
         if (captchaEnabled) {
             validateCaptcha(tenantId, username, code, uuid);
         }
-        AuthUserVo user = loadUserByUsername(username);
-        loginService.checkLogin(LoginType.PASSWORD, tenantId, username, () -> !BCrypt.checkpw(password, user.getPassword()));
+        User user = loadUserByUsername(username);
+        loginService.checkLogin(LoginType.PASSWORD, tenantId, username, () -> !BCrypt.checkpw(password, user.getPwd()));
         LoginUser loginUser = loginService.buildLoginUser(user);
 
         loginUser.setClientKey(client.getClientKey());
         loginUser.setDeviceType(client.getDeviceType());
         loginUser.setUserType("sys_user");
-        loginUser.setUserId(user.getUserId());
-        loginUser.setDeptName(user.getDeptName());
+//        loginUser.setUserId(user.getUseid());
+//        loginUser.setOrgna(user.getOrgna());
         SaLoginParameter model = new SaLoginParameter();
         model.setDeviceType(client.getDeviceType());
         // 自定义分配 不同用户体系 不同 token 授权时间 不设置默认走全局 yml 配置
@@ -143,23 +142,23 @@ public class PasswordAuthStrategy implements IAuthStrategy {
         }
     }
 
-    private AuthUserVo loadUserByUsername(String username) {
+    private User loadUserByUsername(String username) {
 //        SysUserVo user = userService.findById().selectVoOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username));
         SysUser orgUser = userDao.findByUsername(username);
-        AuthUserVo user=new AuthUserVo();
-        user.setUserId(orgUser.getId());
-        user.setUserName(orgUser.getUsername());
-        user.setPassword(orgUser.getPassword());
-        user.setNickName(orgUser.getName());
-        user.setDeptId(orgUser.getDepid());
-        user.setDeptName(orgUser.getDepna());
-        user.setStatus(orgUser.getAvtag()?"0":"1");
+        User user=new User();
+        user.setUseid(orgUser.getId());
+        user.setUsena(orgUser.getUsername());
+        user.setPwd(orgUser.getPassword());
+        user.setNicna(orgUser.getName());
+        user.setOrgid(orgUser.getOrgid());
+        user.setOrgna(orgUser.getOrgna());
+        user.setAvtag(orgUser.getAvtag());
         user.setAvatar(orgUser.getAvatar());
 
         if (ObjectUtils.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        } else if (SystemConstants.DISABLE.equals(user.getStatus())) {
+        } else if (!user.getAvtag()) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }

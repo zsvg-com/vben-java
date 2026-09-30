@@ -132,7 +132,7 @@ public class TestDemoController extends BaseController {
      *
      * @param ids 测试ID串
      */
-    @SaCheckPermission("demo:demo:remove")
+    @SaCheckPermission("demo:demo:delete")
     @Log(title = "测试单表", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

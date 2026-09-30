@@ -15,7 +15,7 @@ import vben.common.log.enums.BusinessType;
  * 定时任务管理
  */
 @RestController
-@RequestMapping("mon/job/main")
+@RequestMapping("mon/job")
 @RequiredArgsConstructor
 public class MonJobMainApi {
 
@@ -28,10 +28,10 @@ public class MonJobMainApi {
      * @param name 任务名称
      * @return 分页对象
      */
-    @SaCheckPermission("monjob:main:query")
+    @SaCheckPermission("mon:job:query")
     @GetMapping
     public R<PageData> get(String name) {
-        Sqler sqler = new Sqler("t.id,t.name,t.reurl,t.cron,t.avtag,t.code,t.crtim,t.notes,t.retyp", "mon_job_main");
+        Sqler sqler = new Sqler("t.id,t.name,t.reurl,t.cron,t.avtag,t.code,t.crtim,t.notes,t.retyp", "mon_job");
         sqler.addLike("t.name", name);
         return R.ok(service.findPageData(sqler));
     }
@@ -41,7 +41,7 @@ public class MonJobMainApi {
      * @param id 任务ID
      * @return 任务对象
      */
-    @SaCheckPermission("monjob:main:query")
+    @SaCheckPermission("mon:job:query")
     @GetMapping("info/{id}")
     public R<MonJobMain> info(@PathVariable Long id) {
         MonJobMain main=service.findById(id);
@@ -55,7 +55,7 @@ public class MonJobMainApi {
      * @throws SchedulerException 调度异常
      */
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-    @SaCheckPermission("monjob:main:edit")
+    @SaCheckPermission("mon:job:edit")
     @PutMapping
     public R<Long> put(@RequestBody MonJobMain main) throws SchedulerException {
         MonJobMain dbJob = service.findById(main.getId());
@@ -81,7 +81,7 @@ public class MonJobMainApi {
      * @throws SchedulerException 调度异常
      */
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
-    @SaCheckPermission("monjob:main:run")
+    @SaCheckPermission("mon:job:run")
     @PostMapping("start")
     public R<Void> start(String ids) throws SchedulerException {
         String[] idArr = ids.split(",");
@@ -101,7 +101,7 @@ public class MonJobMainApi {
      * @throws SchedulerException 调度异常
      */
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
-    @SaCheckPermission("monjob:main:run")
+    @SaCheckPermission("mon:job:run")
     @PostMapping("stop")
     public R<Void> stop(String ids) throws SchedulerException {
         String[] idArr = ids.split(",");
@@ -122,7 +122,7 @@ public class MonJobMainApi {
      * @throws SchedulerException 调度异常
      */
     @Log(title = "定时任务", businessType = BusinessType.OTHER)
-    @SaCheckPermission("monjob:main:run")
+    @SaCheckPermission("mon:job:run")
     @PostMapping("once")
     public R<Void> once(Long id) throws InterruptedException, SchedulerException {
         MonJobMain main=service.findById(id);

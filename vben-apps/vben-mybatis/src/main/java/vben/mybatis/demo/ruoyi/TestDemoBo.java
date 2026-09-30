@@ -31,7 +31,7 @@ public class TestDemoBo extends BaseEntity {
      * 部门id
      */
     @NotNull(message = "部门id不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long deptId;
+    private Long orgid;
 
     /**
      * 用户id

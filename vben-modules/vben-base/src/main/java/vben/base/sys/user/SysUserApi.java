@@ -25,7 +25,7 @@ public class SysUserApi {
 
     /**
      * 用户分页查询
-     * @param depid 部门ID
+     * @param orgid 组织ID
      * @param name 用户姓名
      * @param username 用户账号
      * @param monum 用户手机号
@@ -33,16 +33,16 @@ public class SysUserApi {
      */
     @SaCheckPermission("sys:user:query")
     @GetMapping
-    public R<PageData> get(String depid, String name, String username, String monum) {
+    public R<PageData> get(String orgid, String name, String username, String monum) {
         Sqler sqler = new Sqler("sys_user");
         if (StrUtils.isNotBlank(name) || StrUtils.isNotBlank(username) || StrUtils.isNotBlank(monum)) {
             sqler.addLike("t.name", name);
             sqler.addLike("t.username", username);
             sqler.addLike("t.monum", monum);
-        } else if (depid!=null) {
-            sqler.addEqual("t.depid", depid);
+        } else if (orgid!=null) {
+            sqler.addEqual("t.orgid", orgid);
         }
-        sqler.addLeftJoin("d.name depna","sys_dept d","d.id=t.depid");
+        sqler.addLeftJoin("o.name orgna","sys_org o","o.id=t.orgid");
         sqler.addSelect("t.crtim,t.uptim,t.notes,t.avtag,t.monum,t.username");
         sqler.addOrder("t.ornum");
         return R.ok(service.findPageData(sqler));

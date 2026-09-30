@@ -4,8 +4,8 @@ import cn.hutool.crypto.digest.BCrypt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.Org;
-import vben.base.sys.org.OrgDao;
+import vben.base.sys.actor.Actor;
+import vben.base.sys.actor.ActorDao;
 import vben.base.sys.user.bo.IdAvtagBo;
 import vben.base.sys.user.vo.RegisterVo;
 import vben.common.core.exception.base.BaseException;
@@ -63,13 +63,13 @@ public class SysUserService {
             .setMonum(phone)
             .setPassword(BCrypt.hashpw(password))
             .setAvtag(true)
-            .setDepid("d1000")
-            .setTier("_d1000_"+id+"_")
+            .setOrgid("o1000")
+            .setTier("_o1000_"+id+"_")
             .setCrtim(DateUtils.date());
         try {
             userDao.insert(user);
-            Org org = new Org(user.getId(), user.getName(), 2);
-            orgDao.insert(org);
+            Actor org = new Actor(user.getId(), user.getName(), 2);
+            actorDao.insert(org);
         } catch (org.springframework.dao.DuplicateKeyException e) {
             throw new BaseException(msg);
         }
@@ -81,38 +81,38 @@ public class SysUserService {
         }
         main.setCruid(LoginHelper.getUserId());
         if (StrUtils.isEmpty(main.getTier())) {
-            if (main.getDepid() == null) {
+            if (main.getOrgid() == null) {
                 main.setTier("_" + main.getId() + "_");
             } else {
-                String tier = jdbcHelper.findString("select tier from sys_dept where id=?", main.getDepid());
+                String tier = jdbcHelper.findString("select tier from sys_org where id=?", main.getOrgid());
                 main.setTier(tier + main.getId() + "_");
             }
         }
         main.setPassword(BCrypt.hashpw(main.getPassword()));
-        Org org = new Org(main.getId(), main.getName(), 2);
-        orgDao.insert(org);
+        Actor org = new Actor(main.getId(), main.getName(), 2);
+        actorDao.insert(org);
         userDao.insert(main);
     }
 
     public void update(SysUser main) {
         main.setUptim(new Date());
         main.setUpuid(LoginHelper.getUserId());
-        Org org = new Org(main.getId(), main.getName(), 2);
-        if (main.getDepid() == null) {
+        Actor org = new Actor(main.getId(), main.getName(), 2);
+        if (main.getOrgid() == null) {
             main.setTier("_" + main.getId() + "_");
         } else {
-            String tier = jdbcHelper.findString("select tier from sys_dept where id=?", main.getDepid());
+            String tier = jdbcHelper.findString("select tier from sys_org where id=?", main.getOrgid());
             main.setTier(tier + main.getId() + "_");
         }
         userDao.update(main);
-        orgDao.update(org);
+        actorDao.update(org);
     }
 
     public int delete(String[] ids) {
         for (String id : ids) {
             if (!"u1".equals(id)) {
                 userDao.deleteById(id);
-                orgDao.deleteById(id);
+                actorDao.deleteById(id);
             }
         }
         return ids.length;
@@ -127,7 +127,7 @@ public class SysUserService {
 
     private final SysUserDao userDao;
 
-    private final OrgDao orgDao;
+    private final ActorDao actorDao;
 
     public void updateAvatar(String id, String avatar) {
         userDao.updateAvatar(id, avatar);

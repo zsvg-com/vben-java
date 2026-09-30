@@ -65,7 +65,7 @@ public class BaseMainEntity implements Serializable {
 //     * 创建人
 //     */
 //    @TableField(exist = false)
-//    private SysOrg crman;
+//    private SysActor crman;
 
     /**
      * 创建人姓名
@@ -90,7 +90,7 @@ public class BaseMainEntity implements Serializable {
 //     * 更新人
 //     */
 //    @TableField(exist = false)
-//    private SysOrg upman;
+//    private SysActor upman;
 
     /**
      * 更新人姓名

@@ -25,4 +25,9 @@ public class SysOssUploadVo {
      */
     private String ossId;
 
+    /**
+     * 对象存储主键
+     */
+    private String filid;
+
 }

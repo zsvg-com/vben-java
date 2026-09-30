@@ -35,9 +35,9 @@ public class LoginHelper {
     public static final String TENANT_KEY = "tenantId";
     public static final String USER_KEY = "userId";
     public static final String USER_NAME_KEY = "userName";
-    public static final String DEPT_KEY = "deptId";
-    public static final String DEPT_NAME_KEY = "deptName";
-    public static final String DEPT_CATEGORY_KEY = "deptCategory";
+    public static final String ORG_KEY = "orgid";
+    public static final String ORG_NAME_KEY = "orgna";
+    public static final String ORG_TYPE_KEY = "orgty";
     public static final String CLIENT_KEY = "clientid";
 
     /**
@@ -53,9 +53,9 @@ public class LoginHelper {
             model.setExtra(TENANT_KEY, loginUser.getTenantId())
                 .setExtra(USER_KEY, loginUser.getUserId())
                 .setExtra(USER_NAME_KEY, loginUser.getUsername())
-                .setExtra(DEPT_KEY, loginUser.getDeptId())
-                .setExtra(DEPT_NAME_KEY, loginUser.getDeptName())
-                .setExtra(DEPT_CATEGORY_KEY, loginUser.getDeptCategory())
+                .setExtra(ORG_KEY, loginUser.getOrgid())
+                .setExtra(ORG_NAME_KEY, loginUser.getOrgna())
+                .setExtra(ORG_TYPE_KEY, loginUser.getOrgty())
         );
         StpUtil.getTokenSession().set(LOGIN_USER_KEY, loginUser);
     }
@@ -113,24 +113,24 @@ public class LoginHelper {
     }
 
     /**
-     * 获取部门ID
+     * 获取组织ID
      */
-    public static Long getDeptId() {
-        return Convert.toLong(getExtra(DEPT_KEY));
+    public static Long getOrgid() {
+        return Convert.toLong(getExtra(ORG_KEY));
     }
 
     /**
      * 获取部门名
      */
-    public static String getDeptName() {
-        return Convert.toStr(getExtra(DEPT_NAME_KEY));
+    public static String getOrgna() {
+        return Convert.toStr(getExtra(ORG_NAME_KEY));
     }
 
     /**
      * 获取部门类别编码
      */
-    public static String getDeptCategory() {
-        return Convert.toStr(getExtra(DEPT_CATEGORY_KEY));
+    public static String getOrgty() {
+        return Convert.toStr(getExtra(ORG_TYPE_KEY));
     }
 
     /**

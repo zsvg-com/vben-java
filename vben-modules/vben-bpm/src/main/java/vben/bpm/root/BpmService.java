@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.Org;
+import vben.base.sys.actor.Actor;
 import vben.common.core.exception.ServiceException;
 import vben.common.core.utils.IdUtils;
 import vben.common.core.utils.StrUtils;
@@ -13,7 +13,7 @@ import vben.common.jdbc.root.Db;
 import vben.common.jdbc.sqler.JdbcHelper;
 import vben.common.jdbc.sqler.Sqler;
 import vben.common.satoken.utils.LoginHelper;
-import vben.bpm.org.tree.BpmOrgTreeService;
+import vben.bpm.role.tree.BpmRoleTreeService;
 import vben.bpm.proc.audit.BpmProcAuditService;
 import vben.bpm.proc.def.BpmProcDefService;
 import vben.bpm.proc.inst.BpmProcInst;
@@ -30,7 +30,7 @@ import vben.bpm.proc.task.BpmProcTaskHiService;
 import vben.bpm.proc.task.BpmProcTaskService;
 import vben.bpm.root.domain.Znode;
 import vben.bpm.root.domain.Zproc;
-import vben.bpm.todo.main.BpmTodoMainService;
+import vben.bpm.todo.main.BpmTodoService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -349,12 +349,12 @@ public class BpmService {
 //        Map<String, Object> map = jdbcDao.findMap(sql, zproc.getProid());
 //        zproc.setProna((String) map.get("prona"));
 
-        String turnManSql = "select id,name,type from sys_org where id=?";
-        Org org = jdbcHelper.getTp().queryForObject(turnManSql,new BeanPropertyRowMapper<>(Org.class), zproc.getTuuid());
+        String turnManSql = "select id,name,type from sys_actor where id=?";
+        Actor actor = jdbcHelper.getTp().queryForObject(turnManSql,new BeanPropertyRowMapper<>(Actor.class), zproc.getTuuid());
         if (zproc.getTutag()) {
-            zproc.setOpinf("转办: " + org.getName() + "（完整转办）");
+            zproc.setOpinf("转办: " + actor.getName() + "（完整转办）");
         } else {
-            zproc.setOpinf("转办: " + org.getName());
+            zproc.setOpinf("转办: " + actor.getName());
         }
         //1 评审表保存当前节点的评审信息
         auditService.saveAudit(zproc);
@@ -376,8 +376,8 @@ public class BpmService {
 //        Map<String, Object> map = jdbcDao.findMap(sql, zproc.getProid());
 //        zproc.setProna((String) map.get("prona"));
 
-        String names = getOrgNames("'" + zproc.getCoids().replaceAll(";", "','") + "'");
-//        Sqler sqler = new Sqler("sys_org");
+        String names = getActorNames("'" + zproc.getCoids().replaceAll(";", "','") + "'");
+//        Sqler sqler = new Sqler("sys_actor");
 //        sqler.addWhere("id in " + "(" + ids + ")");
 //        if (DbType.MYSQL.equals(jdbcDao.getDbType())) {
 //            sqler.addOrder("field(id," + ids + ")");
@@ -388,11 +388,11 @@ public class BpmService {
 //        }
 //
 //        sqler.addSelect("t.type");
-//        List<SysOrg> list = jdbcDao.getTp().query(sqler.getSql(), sqler.getParams(),
-//                new BeanPropertyRowMapper<>(SysOrg.class));
+//        List<SysActor> list = jdbcDao.getTp().query(sqler.getSql(), sqler.getParams(),
+//                new BeanPropertyRowMapper<>(SysActor.class));
 //        String names="";
-//        for (SysOrg sysOrg : list) {
-//            names += sysOrg.getName() + ";";
+//        for (SysActor sysActor : list) {
+//            names += sysActor.getName() + ";";
 //        }
 //        names = names.substring(0, names.length() - 1);
         if (zproc.getCotag()) {
@@ -485,7 +485,7 @@ public class BpmService {
         }
         userIds = userIds.substring(0, userIds.length() - 1);
         zproc.setHauid(LoginHelper.getUserId());
-        String names = getOrgNames("'" + userIds.replaceAll(",", "','") + "'");
+        String names = getActorNames("'" + userIds.replaceAll(",", "','") + "'");
         zproc.setOpinf("取消沟通：" + names);
         //1 评审表保存当前节点的评审信息
         auditService.saveAudit(zproc);
@@ -554,21 +554,21 @@ public class BpmService {
     private void exuidsTran(String inuid, Znode znode) {
         String tauids = "";
         if (StrUtils.isNotBlank(znode.getExuids()) && !znode.getExuids().contains(";")) {
-            String tauidsSql = "select t.id, t.name,t.type from sys_org t where t.id=?";
-            Org org = jdbcHelper.getTp().queryForObject(tauidsSql,new BeanPropertyRowMapper<>(Org.class),znode.getExuids());
-            if (org.getType() == 32) {
+            String tauidsSql = "select t.id, t.name,t.type from sys_actor t where t.id=?";
+            Actor actor = jdbcHelper.getTp().queryForObject(tauidsSql,new BeanPropertyRowMapper<>(Actor.class),znode.getExuids());
+            if (actor.getType() == 32) {
 //                String cruid = LoginHelper.getUserId()+"";
 //                if (proid != null) {
 //                    String sql = "select cruid from bpm_proc_inst where id=?";
 //                    cruid = jdbcHelper.findOneString(sql, proid);
 //                }
-                Org org2 = sysOrgRoleTreeService.calc(inuid, org.getId());
-                tauids = org2.getId() + "";
+                Actor actor2 = bpmRoleTreeService.calc(inuid, actor.getId());
+                tauids = actor2.getId() + "";
             } else {
-                tauids = org.getId() + "";
+                tauids = actor.getId() + "";
             }
         } else if (StrUtils.isNotBlank(znode.getExuids()) && znode.getExuids().contains(";")) {
-            Sqler sqler = new Sqler("sys_org");
+            Sqler sqler = new Sqler("sys_actor");
             String ids = znode.getExuids();
             ids = "'" + ids.replaceAll(";", "','") + "'";
             sqler.addWhere("id in " + "(" + ids + ")");
@@ -581,20 +581,20 @@ public class BpmService {
             }
             sqler.addSelect("t.type");
             System.out.println(sqler.getSql());
-            List<Org> list = jdbcHelper.getTp().query(sqler.getSql(), sqler.getParams(),
-                new BeanPropertyRowMapper<>(Org.class));
+            List<Actor> list = jdbcHelper.getTp().query(sqler.getSql(), sqler.getParams(),
+                new BeanPropertyRowMapper<>(Actor.class));
 //            List<SidName> idNameList = jdbcDao.findIdNameList(sqler);
-            for (Org sysOrg : list) {
-                if (sysOrg.getType() == 32) {
+            for (Actor actor : list) {
+                if (actor.getType() == 32) {
 //                    String cruid = LoginHelper.getUserId()+"";
 //                    if (proid != null) {
 //                        String sql = "select cruid from bpm_proc_inst where id=?";
 //                        cruid = jdbcHelper.findOneString(sql, proid);
 //                    }
-                    Org org = sysOrgRoleTreeService.calc(inuid, sysOrg.getId());
-                    tauids += org.getId() + ";";
+                    Actor actor2 = bpmRoleTreeService.calc(inuid, actor.getId());
+                    tauids += actor2.getId() + ";";
                 } else {
-                    tauids += sysOrg.getId() + ";";
+                    tauids += actor.getId() + ";";
                 }
             }
             tauids = tauids.substring(0, tauids.length() - 1);
@@ -615,8 +615,8 @@ public class BpmService {
         return null;
     }
 
-    private String getOrgNames(String ids) {
-        Sqler sqler = new Sqler("sys_org");
+    private String getActorNames(String ids) {
+        Sqler sqler = new Sqler("sys_actor");
         sqler.addWhere("id in " + "(" + ids + ")");
         if (DbType.MYSQL.equals(Db.Type)) {
             sqler.addOrder("field(id," + ids + ")");
@@ -627,11 +627,11 @@ public class BpmService {
         }
 
         sqler.addSelect("t.type");
-        List<Org> list = jdbcHelper.getTp().query(sqler.getSql(), sqler.getParams(),
-            new BeanPropertyRowMapper<>(Org.class));
+        List<Actor> list = jdbcHelper.getTp().query(sqler.getSql(), sqler.getParams(),
+            new BeanPropertyRowMapper<>(Actor.class));
         String names = "";
-        for (Org sysOrg : list) {
-            names += sysOrg.getName() + ";";
+        for (Actor actor : list) {
+            names += actor.getName() + ";";
         }
         names = names.substring(0, names.length() - 1);
         return names;
@@ -640,9 +640,9 @@ public class BpmService {
     //----------bean注入------------
     private final JdbcHelper jdbcHelper;
 
-    private final BpmOrgTreeService sysOrgRoleTreeService;
+    private final BpmRoleTreeService bpmRoleTreeService;
 
-    private final BpmTodoMainService todoService;
+    private final BpmTodoService todoService;
 
     private final BpmProcTaskHiService taskHiService;
 

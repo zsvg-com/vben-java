@@ -4,7 +4,7 @@ package vben.base.sys.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Component;
-import vben.base.mon.login.log.MonLoginLog;
+import vben.base.mon.login.MonLoginLog;
 import vben.base.sys.user.bo.IdAvtagBo;
 import vben.base.sys.user.vo.IdCatagTierVo;
 import vben.common.core.exception.ServiceException;
@@ -46,51 +46,51 @@ public class SysUserDao {
     }
 
 
-    //获取组织架构可用集
-    public String findOrgs(String id) {
+    //获取系统参与者ID可用集
+    public String findAids(String id) {
         String tierSql = "select tier from sys_user where id = ?";
         String tier = jdbcHelper.findString(tierSql, id);
 
-        StringBuilder orgs = new StringBuilder();
+        StringBuilder aids = new StringBuilder();
         //1. conds拼接父级id
         if (StrUtils.isNotBlank(tier)) {
             String[] pidArr = tier.split("_");
             for (int i = pidArr.length - 1; i >= 0; i--) {
                 if (!"".equals(pidArr[i])) {
-                    orgs.append("'").append(pidArr[i]).append("',");
+                    aids.append("'").append(pidArr[i]).append("',");
                 }
             }
         } else {
-            orgs = new StringBuilder("'" + id + "',");
+            aids = new StringBuilder("'" + id + "',");
         }
         //2. conds拼接岗位id
         List<String> postList = findPostList(id);
         for (String str : postList) {
-            orgs.append("'").append(str).append("',");
+            aids.append("'").append(str).append("',");
         }
-        orgs = new StringBuilder(orgs.substring(0, orgs.length() - 1));//优化
+        aids = new StringBuilder(aids.substring(0, aids.length() - 1));//优化
         //3. conds拼接群组id
-        List<String> groupList = findGroupList(orgs.toString());
+        List<String> groupList = findGroupList(aids.toString());
         for (String str : groupList) {
-            orgs.append(",'").append(str).append("'");
+            aids.append(",'").append(str).append("'");
         }
-        return orgs.toString();
+        return aids.toString();
     }
 
-    //获取组织架构岗位id集合
+    //获取岗位id集合
     private List<String> findPostList(String uid) {
-        String sql = "select pid as id from sys_post_org where oid=?";
+        String sql = "select pid as id from sys_post_actor where aid=?";
         return jdbcHelper.findSlist(sql, uid);
     }
 
-    //获取组织架构群组id集合
-    private List<String> findGroupList(String orgs) {
-        String sql = "select DISTINCT gid as id from sys_group_org where oid in (" + orgs + ")";
+    //获取群组id集合
+    private List<String> findGroupList(String aids) {
+        String sql = "select DISTINCT gid as id from sys_group_actor where aid in (" + aids + ")";
         return jdbcHelper.findSlist(sql);
     }
 
     public SysUser findById(String id) {
-        String sql = "select t.*,o.name depna from sys_user t left join sys_org o on o.id=t.depid  where t.id = ?";
+        String sql = "select t.*,a.name orgna from sys_user t left join sys_actor a on a.id=t.orgid  where t.id = ?";
         return jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(SysUser.class), id);
     }
 
@@ -100,7 +100,7 @@ public class SysUserDao {
         sqler.add("name", user.getName());
         sqler.add("username", user.getUsername());
         sqler.add("password", user.getPassword());
-        sqler.add("depid", user.getDepid());
+        sqler.add("orgid", user.getOrgid());
         sqler.add("tier", user.getTier());
         sqler.add("notes", user.getNotes());
         sqler.add("ornum", user.getOrnum());
@@ -127,7 +127,7 @@ public class SysUserDao {
         sqler.addWhere("id=?", user.getId());
         sqler.add("name", user.getName());
         sqler.add("username", user.getUsername());
-        sqler.add("depid", user.getDepid());
+        sqler.add("orgid", user.getOrgid());
         sqler.add("tier", user.getTier());
         sqler.add("notes", user.getNotes());
         sqler.add("ornum", user.getOrnum());
@@ -157,7 +157,7 @@ public class SysUserDao {
     }
 
     public SysUser findByUsername(String username) {
-        String sql = "select t.*,o.name depna from sys_user t left join sys_org o on o.id=t.depid  where t.username = ?";
+        String sql = "select t.*,a.name orgna from sys_user t left join sys_actor a on a.id=t.orgid  where t.username = ?";
         SysUser user;
         try {
             user = jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(SysUser.class), username);
@@ -168,7 +168,7 @@ public class SysUserDao {
     }
 
     public SysUser findByMonum(String monum) {
-        String sql = "select t.*,o.name depna from sys_user t left join sys_org o on o.id=t.depid  where t.monum = ?";
+        String sql = "select t.*,a.name orgna from sys_user t left join sys_actor a on a.id=t.orgid  where t.monum = ?";
         SysUser user;
         try {
             user = jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(SysUser.class), monum);

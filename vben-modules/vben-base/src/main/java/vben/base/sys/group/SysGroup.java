@@ -1,13 +1,13 @@
 package vben.base.sys.group;
 
 import lombok.Data;
-import vben.base.sys.org.Org;
+import vben.base.sys.actor.Actor;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 组织架构群组
+ * 系统群组
  */
 @Data
 public class SysGroup {
@@ -70,6 +70,6 @@ public class SysGroup {
     /**
      * 包含成员
      */
-    private List<Org> members;
+    private List<Actor> members;
 
 }

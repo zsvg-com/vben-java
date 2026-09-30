@@ -21,17 +21,17 @@ public class MonJobMainDao {
     }
 
     public List<MonJobMain> findAll() {
-        String sql = "select * from mon_job_main";
+        String sql = "select * from mon_job";
         return jdbcHelper.getTp().query(sql, new BeanPropertyRowMapper<>(MonJobMain.class));
     }
 
     public MonJobMain findById(Long id) {
-        String sql = "select * from mon_job_main where id = ?";
+        String sql = "select * from mon_job where id = ?";
         return jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(MonJobMain.class), id);
     }
 
     public void insert(MonJobMain main) {
-        Isqler sqler = new Isqler("mon_job_main");
+        Isqler sqler = new Isqler("mon_job");
         sqler.add("id", main.getId());
         sqler.add("name", main.getName());
         sqler.add("code", main.getCode());
@@ -46,7 +46,7 @@ public class MonJobMainDao {
     }
 
     public void update(MonJobMain main) {
-        Usqler sqler = new Usqler("mon_job_main");
+        Usqler sqler = new Usqler("mon_job");
         sqler.addWhere("id=?", main.getId());
         sqler.add("name", main.getName());
         sqler.add("code", main.getCode());
@@ -60,7 +60,7 @@ public class MonJobMainDao {
     }
 
     public void deleteById(Long id) {
-        jdbcHelper.update("delete from mon_job_main where id=?", id);
+        jdbcHelper.update("delete from mon_job where id=?", id);
     }
 
     private final JdbcHelper jdbcHelper;

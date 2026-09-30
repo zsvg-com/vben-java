@@ -9,7 +9,7 @@ import vben.common.core.utils.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
-import vben.common.jpa.entity.SysOrg;
+import vben.common.jpa.entity.SysActor;
 import vben.common.satoken.utils.LoginHelper;
 
 import java.util.Date;
@@ -64,7 +64,7 @@ public abstract class BaseStrMainService<T extends BaseStrMainEntity> {
 //        main.setCrtim(new Date());
         main.setUptim(main.getCrtim());
         if (main.getCrman() == null) {
-            main.setCrman(new SysOrg(LoginHelper.getUserId()));
+            main.setCrman(new SysActor(LoginHelper.getUserId()));
         }
         repo.save(main);
         return main.getId();
@@ -73,7 +73,7 @@ public abstract class BaseStrMainService<T extends BaseStrMainEntity> {
     //修改
     public String update(T main) {
         main.setUptim(new Date());
-        main.setUpman(new SysOrg(LoginHelper.getUserId()));
+        main.setUpman(new SysActor(LoginHelper.getUserId()));
         repo.save(main);
         return main.getId();
     }

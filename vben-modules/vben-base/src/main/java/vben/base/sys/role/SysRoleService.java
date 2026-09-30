@@ -54,6 +54,6 @@ public class SysRoleService {
 
     public void clearCache() {
         RedisUtils.deleteKeys("rlist:*");
-        RedisUtils.deleteKeys("oids:*");
+        RedisUtils.deleteKeys("aids:*");
     }
 }

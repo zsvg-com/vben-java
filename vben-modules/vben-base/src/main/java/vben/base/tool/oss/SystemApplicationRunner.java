@@ -25,7 +25,7 @@ public class SystemApplicationRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         ossConfigService.init();
         RedisUtils.deleteKeys("rlist:*");
-        RedisUtils.deleteKeys("oids:*");
+        RedisUtils.deleteKeys("aids:*");
         RedisUtils.deleteKeys("sys_dict");
         log.info("初始化OSS配置成功");
 

@@ -11,7 +11,7 @@ import vben.common.core.utils.StrUtils;
 import vben.common.jdbc.dto.SidNamePid;
 import vben.common.satoken.utils.LoginHelper;
 import vben.common.web.core.BaseController;
-import vben.bpm.org.tree.BpmUserService;
+import vben.bpm.role.tree.BpmUserService;
 import vben.bpm.proc.audit.BpmProcAuditService;
 import vben.bpm.proc.def.BpmProcDefService;
 import vben.bpm.proc.node.BpmProcNodeHiService;

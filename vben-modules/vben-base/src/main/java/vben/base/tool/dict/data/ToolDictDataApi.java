@@ -13,7 +13,7 @@ import vben.common.log.enums.BusinessType;
  * 字典数据管理
  */
 @RestController
-@RequestMapping("tool/dict/data")
+@RequestMapping("tool/dictd")
 @RequiredArgsConstructor
 public class ToolDictDataApi {
 
@@ -23,7 +23,7 @@ public class ToolDictDataApi {
      * @param dicid 字典ID
      * @return 字典数据分页数据
      */
-    @SaCheckPermission("tooldict:data:query")
+    @SaCheckPermission("tool:dictd:query")
     @GetMapping
     public R<PageData> get(String name, Long dicid) {
         Sqler sqler = new Sqler("t.id","tool_dict_data");
@@ -38,7 +38,7 @@ public class ToolDictDataApi {
      * @param id 字典数据ID
      * @return 字典数据对象
      */
-    @SaCheckPermission("tooldict:data:query")
+    @SaCheckPermission("tool:dictd:query")
     @GetMapping("info/{id}")
     public R<ToolDictData> info(@PathVariable Long id) {
         ToolDictData main = service.findById(id);
@@ -51,7 +51,7 @@ public class ToolDictDataApi {
      * @return 字典数据ID
      */
     @Log(title = "字典数据管理", businessType = BusinessType.INSERT)
-    @SaCheckPermission("tooldict:data:edit")
+    @SaCheckPermission("tool:dictd:edit")
     @PostMapping
     public R<Long> post(@RequestBody ToolDictData main) {
         service.insert(main);
@@ -64,7 +64,7 @@ public class ToolDictDataApi {
      * @return 字典数据ID
      */
     @Log(title = "字典数据管理", businessType = BusinessType.UPDATE)
-    @SaCheckPermission("tooldict:data:edit")
+    @SaCheckPermission("tool:dictd:edit")
     @PutMapping
     public R<Long> put(@RequestBody ToolDictData main) {
         service.update(main);
@@ -77,7 +77,7 @@ public class ToolDictDataApi {
      * @return
      */
     @Log(title = "字典数据管理", businessType = BusinessType.DELETE)
-    @SaCheckPermission("tooldict:data:delete")
+    @SaCheckPermission("tool:dictd:delete")
     @DeleteMapping("{ids}")
     public R<Integer> delete(@PathVariable Long[] ids) {
         return R.ok(service.delete(ids));

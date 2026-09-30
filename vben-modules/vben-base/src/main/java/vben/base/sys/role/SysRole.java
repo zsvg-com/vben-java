@@ -24,6 +24,11 @@ public class SysRole {
     private String name;
 
     /**
+     * 角色标识
+     */
+    private String label;
+
+    /**
      * 角色类型
      */
     private Integer type;
@@ -79,9 +84,14 @@ public class SysRole {
     private Integer ornum;
 
     /**
+     * 数据权限
+     */
+    private List<String> orgids = new ArrayList<>();
+
+    /**
      * 包含成员
      */
-    private List<SidName> orgs = new ArrayList<>();
+    private List<SidName> actors = new ArrayList<>();
 
     /**
      * 包含菜单

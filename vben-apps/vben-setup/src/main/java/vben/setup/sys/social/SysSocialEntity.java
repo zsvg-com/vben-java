@@ -20,9 +20,9 @@ import java.util.Date;
 public class SysSocialEntity {
 
     /**
-     * 创建部门
+     * 创建组织
      */
-    private String createDept;
+    private String createOrg;
 
     /**
      * 创建者

@@ -11,15 +11,24 @@ import vben.common.jdbc.sqler.JdbcHelper;
 import vben.common.jdbc.sqler.Sqler;
 import vben.common.jdbc.sqler.Usqler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
 public class SysRoleDao {
 
     private final JdbcHelper jdbcHelper;
+
+    public Set<String> findSetByAids(String aids) {
+        String sql = "select distinct r.label id from sys_role r inner join sys_role_actor ra on ra.rid=r.id  where r.avtag="+Db.True+" and ra.aid in ("+aids+")";
+        List<String> stringList = jdbcHelper.findSlist(sql);
+        return new HashSet<>(stringList);
+    }
+
+    public Integer findDataScope(String aids) {
+        String sql = "select max(r.scope) id from sys_role r inner join sys_role_actor ra on ra.rid=r.id  where r.avtag="+Db.True+" and ra.aid in ("+aids+")";
+        return jdbcHelper.findInteger(sql);
+    }
 
     public List<MenuVo> findMenuVoList() {
         String menuSql="select id,name,pid,icon,type from sys_menu where avtag="+Db.True+" order by ornum";
@@ -46,7 +55,7 @@ public class SysRoleDao {
         String sql = "select * from sys_role where id = ?";
         SysRole role = jdbcHelper.getTp().queryForObject(sql, new BeanPropertyRowMapper<>(SysRole.class), id);
         //创建人与修改人
-        String cusql = "select name from sys_org where id = ?";
+        String cusql = "select name from sys_actor where id = ?";
         if(role.getCruid()!=null){
             role.setCruna(jdbcHelper.findString(cusql, role.getCruid()));
         }
@@ -54,13 +63,15 @@ public class SysRoleDao {
             role.setUpuna(jdbcHelper.findString(cusql, role.getUpuid()));
         }
         //成员、菜单与接口
-        String orgSql="select t.id,t.name from sys_org t inner join sys_role_org o on o.oid=t.id where o.rid=?";
-        List<SidName> orgList = jdbcHelper.getTp().query(orgSql, new BeanPropertyRowMapper<>(SidName.class),id);
-        role.setOrgs(orgList);
+        String actorSql="select t.id,t.name from sys_actor t inner join sys_role_actor a on a.aid=t.id where a.rid=?";
+        List<SidName> actorList = jdbcHelper.getTp().query(actorSql, new BeanPropertyRowMapper<>(SidName.class),id);
+        role.setActors(actorList);
         List<Long> menidList = jdbcHelper.findLlist("select mid id from sys_role_menu where rid=?", id);
         role.setMenus(menidList);
         List<Long> apiidList = jdbcHelper.findLlist("select aid id from sys_role_api where rid=?", id);
         role.setApis(apiidList);
+        List<String> orgidList = jdbcHelper.findSlist("select aid id from sys_role_org where rid=?", id);
+        role.setOrgids(orgidList);
         return role;
     }
 
@@ -77,8 +88,10 @@ public class SysRoleDao {
         sqler.add("ornum", role.getOrnum());
         sqler.add("type", role.getType());
         sqler.add("scope", role.getScope());
+        sqler.add("label", role.getLabel());
         jdbcHelper.getTp().update(sqler.getSql(), sqler.getParams());
 
+        //接口处理
         String apiSql = "insert into sys_role_api(rid,aid) values(?,?)";
         List<Object[]> apiInsertList = new ArrayList<>();
         for (Long aid : role.getApis()) {
@@ -89,6 +102,7 @@ public class SysRoleDao {
         }
         jdbcHelper.batch(apiSql, apiInsertList);
 
+        //菜单处理
         String menuSql = "insert into sys_role_menu(rid,mid) values(?,?)";
         List<Object[]> menuInsertList = new ArrayList<>();
         for (Long mid : role.getMenus()) {
@@ -99,12 +113,24 @@ public class SysRoleDao {
         }
         jdbcHelper.batch(menuSql, menuInsertList);
 
-        String orgSql = "insert into sys_role_org(rid,oid) values(?,?)";
-        List<Object[]> orgInsertList = new ArrayList<>();
-        for (SidName sidName : role.getOrgs()) {
+        //成员处理
+        String actorSql = "insert into sys_role_actor(rid,aid) values(?,?)";
+        List<Object[]> actorInsertList = new ArrayList<>();
+        for (SidName sidName : role.getActors()) {
             Object[] arr = new Object[2];
             arr[0] = role.getId();
             arr[1] = sidName.getId();
+            actorInsertList.add(arr);
+        }
+        jdbcHelper.batch(actorSql, actorInsertList);
+
+        //数据权限处理
+        String orgSql = "insert into sys_role_org(rid,aid) values(?,?)";
+        List<Object[]> orgInsertList = new ArrayList<>();
+        for (String orgid : role.getOrgids()) {
+            Object[] arr = new Object[2];
+            arr[0] = role.getId();
+            arr[1] = orgid;
             orgInsertList.add(arr);
         }
         jdbcHelper.batch(orgSql, orgInsertList);
@@ -121,8 +147,10 @@ public class SysRoleDao {
         sqler.add("ornum", role.getOrnum());
         sqler.add("type", role.getType());
         sqler.add("scope", role.getScope());
+        sqler.add("label", role.getLabel());
         jdbcHelper.getTp().update(sqler.getSql(), sqler.getParams());
 
+        //接口处理
         jdbcHelper.update("delete from sys_role_api where rid=?", role.getId());
         String apiSql = "insert into sys_role_api(rid,aid) values(?,?)";
         List<Object[]> apiInsertList = new ArrayList<>();
@@ -134,6 +162,7 @@ public class SysRoleDao {
         }
         jdbcHelper.batch(apiSql, apiInsertList);
 
+        //菜单处理
         jdbcHelper.update("delete from sys_role_menu where rid=?", role.getId());
         String menuSql = "insert into sys_role_menu(rid,mid) values(?,?)";
         List<Object[]> menuInsertList = new ArrayList<>();
@@ -145,19 +174,33 @@ public class SysRoleDao {
         }
         jdbcHelper.batch(menuSql, menuInsertList);
 
-        jdbcHelper.update("delete from sys_role_org where rid=?", role.getId());
-        String orgSql = "insert into sys_role_org(rid,oid) values(?,?)";
-        List<Object[]> orgInsertList = new ArrayList<>();
-        for (SidName sidName : role.getOrgs()) {
+        //成员处理
+        jdbcHelper.update("delete from sys_role_actor where rid=?", role.getId());
+        String actorSql = "insert into sys_role_actor(rid,aid) values(?,?)";
+        List<Object[]> actorInsertList = new ArrayList<>();
+        for (SidName sidName : role.getActors()) {
             Object[] arr = new Object[2];
             arr[0] = role.getId();
             arr[1] = sidName.getId();
+            actorInsertList.add(arr);
+        }
+        jdbcHelper.batch(actorSql, actorInsertList);
+
+        //数据权限处理
+        jdbcHelper.update("delete from sys_role_org where rid=?", role.getId());
+        String orgSql = "insert into sys_role_org(rid,aid) values(?,?)";
+        List<Object[]> orgInsertList = new ArrayList<>();
+        for (String orgid : role.getOrgids()) {
+            Object[] arr = new Object[2];
+            arr[0] = role.getId();
+            arr[1] = orgid;
             orgInsertList.add(arr);
         }
         jdbcHelper.batch(orgSql, orgInsertList);
     }
 
     public void deleteById(Long id) {
+        jdbcHelper.update("delete from sys_role_actor where rid=?", id);
         jdbcHelper.update("delete from sys_role_org where rid=?", id);
         jdbcHelper.update("delete from sys_role_api where rid=?", id);
         jdbcHelper.update("delete from sys_role_menu where rid=?", id);

@@ -144,7 +144,7 @@ RuoYi-Vue-Plus框架对分布式支持比较好，vben-java框架在支持分布
         <td align="center">数据权限</td>
         <td>采用 Mybatis-Plus 插件 自行分析拼接SQL 无感式过滤只需为Mapper设置好注解条件 支持多种自定义 不限于部门角色
         </td>
-        <td align="center">√ 可采用此方式，另外组织架构模块增加了群组模块，可实现更灵活的数据权限控制</td>
+        <td align="center">√ 可采用此方式，另外系统成员模块增加了群组模块，可实现更灵活的数据权限控制</td>
     </tr>
     <tr>
         <td align="center">数据脱敏</td>
@@ -192,7 +192,7 @@ RuoYi-Vue-Plus框架对分布式支持比较好，vben-java框架在支持分布
         <td align="center">数据库主键</td>
         <td>采用 雪花ID 基于时间戳的 有序增长 唯一ID 再也不用为分库分表 数据合并主键冲突重复而发愁</td>
         <td align="center">√
-            支持雪花ID，为了兼容性支持，特别是需要与其他业务系统关联的基础组织架构模块，采用的是32位字符串UUID方式
+            支持雪花ID，为了兼容性支持，特别是需要与其他业务系统关联的基础系统成员模块，采用的是32位字符串UUID方式
         </td>
     </tr>
     <tr>

@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 部门初始化
+ * 系统通知初始化
  */
 @Service
 @RequiredArgsConstructor

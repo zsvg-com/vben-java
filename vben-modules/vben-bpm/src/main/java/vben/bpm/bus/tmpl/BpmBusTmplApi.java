@@ -14,7 +14,7 @@ import java.util.List;
  * 流程模板
  */
 @RestController
-@RequestMapping("bpm/bus/tmpl")
+@RequestMapping("bpm/bust")
 @RequiredArgsConstructor
 public class BpmBusTmplApi {
 

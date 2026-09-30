@@ -9,12 +9,12 @@ import lombok.Data;
 
 
 /**
- * 群组分类
+ * 系统群组分类
  */
 @Data
 @Entity
 @Table(name = "sys_group_cate")
-@Schema(description = "组织架构-群组分类")
+@Schema(description = "系统群组分类")
 public class SysGroupCateEntity {
     /**
      * 主键ID

@@ -88,7 +88,7 @@ public class MonLoginLogEntity {
     /**
      * 提示消息
      */
-    @Schema(description = "操作系统")
+    @Schema(description = "提示消息")
     private String himsg;
 
 

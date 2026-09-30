@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 部门初始化
+ * 接口初始化
  */
 @Service
 @RequiredArgsConstructor
@@ -21,25 +21,25 @@ public class SysApiInitService {
         SysApiEntity a101001 = new SysApiEntity();
         a101001.setId(101001L);
         a101001.setOrnum(101001);
-        a101001.setName("部门查询");
+        a101001.setName("组织查询");
         a101001.setMenid(1010L);
-        a101001.setPerm("sys:dept:query");
+        a101001.setPerm("sys:org:query");
         list.add(a101001);
 
         SysApiEntity a101002 = new SysApiEntity();
         a101002.setId(101002L);
         a101002.setOrnum(101002);
-        a101002.setName("部门编辑");
+        a101002.setName("组织编辑");
         a101002.setMenid(1010L);
-        a101002.setPerm("sys:dept:edit");
+        a101002.setPerm("sys:org:edit");
         list.add(a101002);
 
         SysApiEntity a101003 = new SysApiEntity();
         a101003.setId(101003L);
         a101003.setOrnum(101003);
-        a101003.setName("部门删除");
+        a101003.setName("组织删除");
         a101003.setMenid(1010L);
-        a101003.setPerm("sys:dept:delete");
+        a101003.setPerm("sys:org:delete");
         list.add(a101003);
 
         SysApiEntity a102001 = new SysApiEntity();
@@ -343,7 +343,7 @@ public class SysApiInitService {
         a206001.setOrnum(206001);
         a206001.setName("定时任务查询");
         a206001.setMenid(2060L);
-        a206001.setPerm("monjob:main:query");
+        a206001.setPerm("mon:job:query");
         list.add(a206001);
 
         SysApiEntity a206002 = new SysApiEntity();
@@ -351,7 +351,7 @@ public class SysApiInitService {
         a206002.setOrnum(206002);
         a206002.setName("定时任务修改");
         a206002.setMenid(2060L);
-        a206002.setPerm("monjob:main:edit");
+        a206002.setPerm("mon:job:edit");
         list.add(a206002);
 
         SysApiEntity a206003 = new SysApiEntity();
@@ -359,7 +359,7 @@ public class SysApiInitService {
         a206003.setOrnum(206003);
         a206003.setName("定时任务执行");
         a206003.setMenid(2060L);
-        a206003.setPerm("monjob:main:run");
+        a206003.setPerm("mon:job:run");
         list.add(a206003);
 
         SysApiEntity a206101 = new SysApiEntity();
@@ -367,7 +367,7 @@ public class SysApiInitService {
         a206101.setOrnum(206101);
         a206101.setName("定时任务日志查询");
         a206101.setMenid(2061L);
-        a206101.setPerm("monjob:log:query");
+        a206101.setPerm("mon:jobl:query");
         list.add(a206101);
 
         SysApiEntity a206102 = new SysApiEntity();
@@ -375,7 +375,7 @@ public class SysApiInitService {
         a206102.setOrnum(206102);
         a206102.setName("定时任务日志删除");
         a206102.setMenid(2061L);
-        a206102.setPerm("monjob:log:delete");
+        a206102.setPerm("mon:jobl:delete");
         list.add(a206102);
 
         SysApiEntity a301001 = new SysApiEntity();
@@ -383,7 +383,7 @@ public class SysApiInitService {
         a301001.setOrnum(301001);
         a301001.setName("字典查询");
         a301001.setMenid(3010L);
-        a301001.setPerm("tooldict:main:query");
+        a301001.setPerm("tool:dict:query");
         list.add(a301001);
 
         SysApiEntity a301002 = new SysApiEntity();
@@ -391,7 +391,7 @@ public class SysApiInitService {
         a301002.setOrnum(301002);
         a301002.setName("字典修改");
         a301002.setMenid(3010L);
-        a301002.setPerm("tooldict:main:edit");
+        a301002.setPerm("tool:dict:edit");
         list.add(a301002);
 
         SysApiEntity a301003 = new SysApiEntity();
@@ -399,7 +399,7 @@ public class SysApiInitService {
         a301003.setOrnum(301003);
         a301003.setName("字典删除");
         a301003.setMenid(3010L);
-        a301003.setPerm("tooldict:main:delete");
+        a301003.setPerm("tool:dict:delete");
         list.add(a301003);
 
         SysApiEntity a301004 = new SysApiEntity();
@@ -407,7 +407,7 @@ public class SysApiInitService {
         a301004.setOrnum(301004);
         a301004.setName("字典数据查询");
         a301004.setMenid(3010L);
-        a301004.setPerm("tooldict:data:query");
+        a301004.setPerm("tool:dictd:query");
         list.add(a301004);
 
         SysApiEntity a301005 = new SysApiEntity();
@@ -415,7 +415,7 @@ public class SysApiInitService {
         a301005.setOrnum(301005);
         a301005.setName("字典数据编辑");
         a301005.setMenid(3010L);
-        a301005.setPerm("tooldict:data:edit");
+        a301005.setPerm("tool:dictd:edit");
         list.add(a301005);
 
         SysApiEntity a301006 = new SysApiEntity();
@@ -423,7 +423,7 @@ public class SysApiInitService {
         a301006.setOrnum(301006);
         a301006.setName("字典数据删除");
         a301006.setMenid(3010L);
-        a301006.setPerm("tooldict:data:delete");
+        a301006.setPerm("tool:dictd:delete");
         list.add(a301006);
 
         SysApiEntity a302001 = new SysApiEntity();
@@ -461,7 +461,7 @@ public class SysApiInitService {
         a603001.setOrnum(603001);
         a603001.setName("流程查询");
         a603001.setMenid(6030L);
-        a603001.setPerm("bpmbus:main:query");
+        a603001.setPerm("bpm:bus:query");
         list.add(a603001);
 
         SysApiEntity a603002 = new SysApiEntity();
@@ -469,7 +469,7 @@ public class SysApiInitService {
         a603002.setOrnum(603002);
         a603002.setName("流程新增");
         a603002.setMenid(6030L);
-        a603002.setPerm("bpmbus:main:add");
+        a603002.setPerm("bpm:bus:add");
         list.add(a603002);
 
         SysApiEntity a603003 = new SysApiEntity();
@@ -477,7 +477,7 @@ public class SysApiInitService {
         a603003.setOrnum(603003);
         a603003.setName("流程编辑");
         a603003.setMenid(6030L);
-        a603003.setPerm("bpmbus:main:edit");
+        a603003.setPerm("bpm:bus:edit");
         list.add(a603003);
 
         insert(list);

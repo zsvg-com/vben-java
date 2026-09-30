@@ -280,14 +280,14 @@ public class Sqler
     }
 
     public Sqler selectCinfo(){
-        addLeftJoin("oo1.name as cruna,t.crtim", "sys_org oo1", "oo1.id=t.cruid");
+        addLeftJoin("aa1.name as cruna,t.crtim", "sys_actor aa1", "aa1.id=t.cruid");
         return this;
     }
 
 
     public Sqler selectCUinfo(){
-        addLeftJoin("oo1.name as cruna,t.crtim", "sys_org oo1", "oo1.id=t.cruid");
-        addLeftJoin("oo2.name as upuna,t.uptim", "sys_org oo2", "oo2.id=t.upuid");
+        addLeftJoin("aa1.name as cruna,t.crtim", "sys_actor aa1", "aa1.id=t.cruid");
+        addLeftJoin("aa2.name as upuna,t.uptim", "sys_actor aa2", "aa2.id=t.upuid");
         return this;
     }
 

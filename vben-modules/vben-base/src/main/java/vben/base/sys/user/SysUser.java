@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * 组织架构用户
+ * 系统用户
  */
 @Data
 @Accessors(chain = true)
@@ -48,14 +48,14 @@ public class SysUser {
     private String gender;
 
     /**
-     * 部门ID
+     * 组织ID
      */
-    private String depid;
+    private String orgid;
 
     /**
-     * 部门名称
+     * 组织名称
      */
-    private String depna;
+    private String orgna;
 
     /**
      * 层级，以“_”隔开

@@ -56,6 +56,6 @@ public class BpmTodoHistEntity {
 //    @ManyToMany
 //    @JoinTable(name = "bpm_todo_user", joinColumns = {@JoinColumn(name = "tid")},
 //            inverseJoinColumns = {@JoinColumn(name = "uid")})
-//    private List<SysOrg> tamen;
+//    private List<SysActor> tamen;
 
 }

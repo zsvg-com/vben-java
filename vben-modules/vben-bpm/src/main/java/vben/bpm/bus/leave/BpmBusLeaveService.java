@@ -8,8 +8,8 @@ import vben.common.core.utils.IdUtils;
 import vben.common.jdbc.dto.PageData;
 import vben.common.jdbc.sqler.Sqler;
 import vben.common.satoken.utils.LoginHelper;
-import vben.bpm.bus.main.BpmBusMain;
-import vben.bpm.bus.main.BpmBusMainService;
+import vben.bpm.bus.main.BpmBus;
+import vben.bpm.bus.main.BpmBusService;
 
 import java.util.Date;
 
@@ -37,10 +37,10 @@ public class BpmBusLeaveService {
 
 
         //启动流程
-        BpmBusMain flowBo = main.getFlowBo();
+        BpmBus flowBo = main.getFlowBo();
         flowBo.setId(Long.valueOf(main.getId()));
         flowBo.setCruid(main.getCruid());
-        bpmBusMainService.insert(flowBo);
+        bpmBusService.insert(flowBo);
         return main.getId();
     }
 
@@ -51,8 +51,8 @@ public class BpmBusLeaveService {
 
 
         //流转流程
-        BpmBusMain flowBo = main.getFlowBo();
-        bpmBusMainService.update(flowBo);
+        BpmBus flowBo = main.getFlowBo();
+        bpmBusService.update(flowBo);
         return main.getId();
     }
 
@@ -63,7 +63,7 @@ public class BpmBusLeaveService {
         return ids.length;
     }
 
-    private final BpmBusMainService bpmBusMainService;
+    private final BpmBusService bpmBusService;
 
     private final BpmBusLeaveDao dao;
 }

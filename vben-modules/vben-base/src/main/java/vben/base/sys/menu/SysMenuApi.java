@@ -34,8 +34,8 @@ public class SysMenuApi {
         //sqler.addSelect("t.pid,t.notes,t.crtim,t.uptim,t.ornum");
         sqler.addLike("t.name", name);
         sqler.addOrder("t.ornum");
-        sqler.addLeftJoin("oo1.name as cruna", "sys_org oo1", "oo1.id=t.cruid");
-        sqler.addLeftJoin("oo2.name as upuna", "sys_org oo2", "oo2.id=t.upuid");
+        sqler.addLeftJoin("aa1.name as cruna", "sys_actor aa1", "aa1.id=t.cruid");
+        sqler.addLeftJoin("aa2.name as upuna", "sys_actor aa2", "aa2.id=t.upuid");
         sqler.addWhere("t.avtag="+ Db.True);
         return R.ok(service.findList(sqler));
     }

@@ -3,8 +3,12 @@ package vben.base.auth.login;
 import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import vben.base.auth.login.strategy.IAuthStrategy;
+import vben.base.auth.login.vo.LoginVo;
+import vben.base.auth.login.vo.SysClientVo;
 import vben.common.core.domain.R;
 import vben.common.core.domain.model.LoginBody;
 import vben.common.core.utils.ValidatorUtils;
@@ -12,8 +16,6 @@ import vben.common.json.utils.JsonUtils;
 import vben.common.satoken.utils.LoginHelper;
 import vben.common.sse.dto.SseMessageDto;
 import vben.common.sse.utils.SseMessageUtils;
-import vben.base.auth.login.vo.LoginVo;
-import vben.base.auth.login.vo.SysClientVo;
 
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,7 +38,7 @@ public class AuthLoginApi {
      * @param body 登录信息
      * @return 结果
      */
-    //@ApiEncrypt
+//    @ApiEncrypt
     @PostMapping("/auth/login")
     public R<LoginVo> login(@RequestBody String body) {
 

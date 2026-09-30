@@ -20,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysMenuDao {
 
-    public List<SysMenu> findListByOids(String oids) {
-        String sql = "select distinct m.shtag,m.type,m.name,m.path,m.icon,m.comp,m.ornum,m.id,m.pid,m.outag,m.catag from sys_menu m inner join sys_role_menu rm on rm.mid=m.id inner join sys_role_org ro on ro.rid=rm.rid  where m.avtag="+Db.True+" and ro.oid in ("+oids+") order by m.pid,m.ornum";
+    public List<SysMenu> findListByAids(String aids) {
+        String sql = "select distinct m.shtag,m.type,m.name,m.path,m.icon,m.comp,m.ornum,m.id,m.pid,m.outag,m.catag from sys_menu m inner join sys_role_menu rm on rm.mid=m.id inner join sys_role_actor ra on ra.rid=rm.rid  where m.avtag="+Db.True+" and ra.aid in ("+aids+") order by m.pid,m.ornum";
         List<SysMenu> list = jdbcHelper.getTp().query(sql, new BeanPropertyRowMapper<>(SysMenu.class));
         return getChildPerms(list, Constants.TOP_PARENT_ID);
     }

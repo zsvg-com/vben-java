@@ -22,12 +22,12 @@ public class BaseStrMainEntity {
 //    @ManyToMany
 //    @JoinTable(name = "xxx_viewer", joinColumns = {@JoinColumn(name = "id")},
 //            inverseJoinColumns = {@JoinColumn(name = "org")})
-//    private List<SysOrg> viewers;//记录可查看者
+//    private List<SysActor> viewers;//记录可查看者
 //
 //    @ManyToMany
 //    @JoinTable(name = "xxx_editor", joinColumns = {@JoinColumn(name = "id")},
 //            inverseJoinColumns = {@JoinColumn(name = "org")})
-//    private List<SysOrg> editors;//记录可编辑者
+//    private List<SysActor> editors;//记录可编辑者
 
 
     //----------------------norm标准属性-----------------------
@@ -41,7 +41,7 @@ public class BaseStrMainEntity {
     @ManyToOne
     @JoinColumn(name = "cruid", updatable = false)
     @Schema(description = "创建人ID")
-    protected SysOrg crman;
+    protected SysActor crman;
 
     @Column(updatable = false)
     @Schema(description = "创建时间")
@@ -50,7 +50,7 @@ public class BaseStrMainEntity {
     @ManyToOne
     @JoinColumn(name = "upuid")
     @Schema(description = "更新人")
-    protected SysOrg upman;
+    protected SysActor upman;
 
     @Schema(description = "更新时间")
     protected Date uptim;

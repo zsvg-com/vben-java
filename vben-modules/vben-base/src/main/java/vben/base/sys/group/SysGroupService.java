@@ -3,8 +3,8 @@ package vben.base.sys.group;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vben.base.sys.org.Org;
-import vben.base.sys.org.OrgDao;
+import vben.base.sys.actor.Actor;
+import vben.base.sys.actor.ActorDao;
 import vben.common.core.utils.IdUtils;
 import vben.common.jdbc.dto.PageData;
 import vben.common.jdbc.sqler.JdbcHelper;
@@ -33,23 +33,23 @@ public class SysGroupService {
             main.setId("g"+IdUtils.getSnowflakeNextIdStr());
         }
         main.setCruid(LoginHelper.getUserId());
-        Org org = new Org(main.getId(), main.getName(), 8);
-        orgDao.insert(org);
+        Actor org = new Actor(main.getId(), main.getName(), 8);
+        actorDao.insert(org);
         groupDao.insert(main);
     }
 
     public void update(SysGroup main) {
         main.setUptim(new Date());
         main.setUpuid(LoginHelper.getUserId());
-        Org org = new Org(main.getId(), main.getName(), 8);
-        orgDao.update(org);
+        Actor org = new Actor(main.getId(), main.getName(), 8);
+        actorDao.update(org);
         groupDao.update(main);
     }
 
     public int delete(String[] ids) {
         for (String id : ids) {
             groupDao.deleteById(id);
-            orgDao.deleteById(id);
+            actorDao.deleteById(id);
         }
         return ids.length;
     }
@@ -58,6 +58,6 @@ public class SysGroupService {
 
     private final SysGroupDao groupDao;
 
-    private final OrgDao orgDao;
+    private final ActorDao actorDao;
 
 }

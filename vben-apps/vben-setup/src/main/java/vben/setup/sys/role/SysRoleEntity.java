@@ -3,7 +3,7 @@ package vben.setup.sys.role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import vben.common.jpa.entity.SysOrg;
+import vben.common.jpa.entity.SysActor;
 import vben.setup.sys.api.SysApiEntity;
 import vben.setup.sys.menu.SysMenuEntity;
 
@@ -29,6 +29,13 @@ public class SysRoleEntity {
     @Column(length = 32)
     @Schema(description = "角色名称")
     private String name;
+
+    /**
+     * 角色标识
+     */
+    @Column(length = 32)
+    @Schema(description = "角色标识")
+    private String label;
 
     /**
      * 角色类型
@@ -100,9 +107,15 @@ public class SysRoleEntity {
 
     @ManyToMany
     @JoinTable(name = "sys_role_org", joinColumns = {@JoinColumn(name = "rid")},
-        inverseJoinColumns = {@JoinColumn(name = "oid")})
+        inverseJoinColumns = {@JoinColumn(name = "aid")})
+    @Schema(description = "自定义数据权限")
+    private List<SysActor> orgs;
+
+    @ManyToMany
+    @JoinTable(name = "sys_role_actor", joinColumns = {@JoinColumn(name = "rid")},
+        inverseJoinColumns = {@JoinColumn(name = "aid")})
     @Schema(description = "成员列表")
-    private List<SysOrg> orgs;
+    private List<SysActor> actors;
 
     @ManyToMany
     @JoinTable(name = "sys_role_menu", joinColumns = {@JoinColumn(name = "rid")},
